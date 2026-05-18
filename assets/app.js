@@ -284,17 +284,18 @@ const GROUPS = [
 ];
 
 const SUBGROUP_LABELS = {
-  "com-cafe":"Com café",
-  "sem-cafe":"Sem café",
-  "quente":"Quente",
-  "gelado":"Gelado",
-  "todos":"Todos",
-  "na-chapa":"Na chapa",
+  "com-cafe": "Com café",
+  "sem-cafe": "Sem café",
+  "quente": "Quente",
+  "gelado": "Gelado",
+  "todos": "Todos",
+  "na-chapa": "Na chapa",
+  "cafes-especiais": "Cafés especiais",
+  "bebidas-especiais": "Bebidas especiais",
+  "cafes-gelados": "Cafés gelados",
+  "sobremesas": "Sobremesas"
+};
 
-  'cafes-especiais': 'Cafés especiais',
-  'bebidas-especiais': 'Bebidas especiais',
-  'cafes-gelados': 'Cafés gelados',
-  'sobremesas': 'Sobremesas',};
 
 
 const testimonials = [
