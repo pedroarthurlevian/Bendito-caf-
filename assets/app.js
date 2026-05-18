@@ -101,14 +101,36 @@ const catalog = [
     badge: 'refrescante',
     image: 'assets/img/produtos/americano-gelado.jpeg'
   },
+  {
+    id: 'pink-lemonade',
+    name: 'Pink Lemonade',
+    desc: 'Limonada gelada com toque frutado e visual vibrante para uma opção leve e refrescante.',
+    price: 15,
+    group: 'outras-bebidas',
+    subgroup: 'gelado',
+    badge: 'cítrica',
+    image: 'assets/img/produtos/pink-lemonade.jpeg'
+  },
+  {
+    id: 'chai-latte-gelado',
+    name: 'Chai Latte gelado',
+    desc: 'Versão gelada do chai latte, com especiarias, leite cremoso e perfil aromático.',
+    price: 20,
+    group: 'bebidas-geladas',
+    subgroup: 'gelado',
+    badge: 'aromático',
+    image: 'assets/img/produtos/chai-latte-gelado.jpeg'
+  },
 // Bebidas quentes - com café
 // Bebidas geladas - com café
 // Matcha
-  { id:"mat-01", group:"matcha", subgroup:"quente", name:"Matcha Puro", price:11.00, badge:"Quente", image:"https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=1200&auto=format&fit=crop", desc:"Matcha e água." },
-  { id:"mat-02", group:"matcha", subgroup:"quente", name:"Latte Matcha", price:15.00, badge:"Quente", image:"https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=1200&auto=format&fit=crop", desc:"Matcha, leite e coco." },
-  { id:"mat-03", group:"matcha", subgroup:"gelado", name:"Latte Matcha com Morango", price:18.00, badge:"Gelado", image:"https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=1200&auto=format&fit=crop", desc:"Matcha, leite, purê de morango e gelo." },
-  { id:"mat-04", group:"matcha", subgroup:"gelado", name:"Latte Matcha com Coco e Menta", price:18.00, badge:"Gelado", image:"https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=1200&auto=format&fit=crop", desc:"Matcha, leite, coco, menta e gelo." },
-  { id:"mat-05", group:"matcha", subgroup:"gelado", name:"Matcha Tropical", price:18.00, badge:"Tropical", image:"https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=1200&auto=format&fit=crop", desc:"Matcha, água com gás, gengibre, pêssego e gelo." },
+  { id:"mat-01", group:"matcha", subgroup:"quente", name:"Matcha Puro", price:11.00, badge:"Quente", image:"assets/img/produtos/matcha-puro.jpeg", desc:"Matcha servido de forma pura, com sabor marcante e perfil vegetal elegante." },
+  { id:"mat-02", group:"matcha", subgroup:"quente", name:"Latte Matcha", price:15.00, badge:"Quente", image:"assets/img/produtos/latte-matcha.jpeg", desc:"Matcha com leite cremoso e acabamento delicado para uma pausa reconfortante." },
+  { id:"mat-03", group:"matcha", subgroup:"gelado", name:"Latte Matcha com Morango", price:18.00, badge:"Gelado", image:"assets/img/produtos/latte-matcha-com-morango.jpeg", desc:"Combinação refrescante de matcha, leite, morango e gelo com visual marcante." },
+  { id:"mat-04", group:"matcha", subgroup:"gelado", name:"Latte Matcha com Coco e Menta", price:18.00, badge:"Gelado", image:"assets/img/produtos/latte-matcha-com-coco-e-menta.jpeg", desc:"Matcha gelado com coco e menta para uma bebida leve, cremosa e refrescante." },
+  { id:"mat-05", group:"matcha", subgroup:"gelado", name:"Matcha Tropical", price:18.00, badge:"Tropical", image:"assets/img/produtos/matcha-tropical.jpeg", desc:"Matcha gelado com perfil tropical e refrescante, ideal para dias quentes." },
+  { id:"mat-06", group:"matcha", subgroup:"gelado", name:"Latte Matcha com Maracujá", price:18.00, badge:"Gelado", image:"assets/img/produtos/latte-matcha-com-maracuja.jpeg", desc:"Matcha gelado combinado com leite e maracujá para um resultado cremoso e frutado." },
+  { id:"mat-07", group:"matcha", subgroup:"gelado", name:"Matcha Maracujá Spritz", price:19.00, badge:"Spritz", image:"assets/img/produtos/matcha-maracuja-spritz.jpeg", desc:"Bebida refrescante com matcha, maracujá e borbulhas leves para um toque especial." },
 
   // Outras bebidas
   { id:"out-01", group:"outras-bebidas", subgroup:"todos", name:"Água", price:5.00, badge:"Clássico", image:"https://images.unsplash.com/photo-1564419439288-b2d15a86f8ff?q=80&w=1200&auto=format&fit=crop", desc:"Sem gás ou com gás." },
@@ -117,10 +139,10 @@ const catalog = [
 
   // Adicionais
   { id:"add-01", group:"adicionais", subgroup:"todos", name:"Leite sem Lactose", price:1.50, badge:"Adicional", image:"https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=1200&auto=format&fit=crop", desc:"Adicional para adaptar a bebida." },
-  { id:"add-02", group:"adicionais", subgroup:"todos", name:"Ovomaltine", price:3.00, badge:"Extra", image:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=1200&auto=format&fit=crop", desc:"Adicional para enriquecer a bebida." },
-  { id:"add-03", group:"adicionais", subgroup:"todos", name:"Chantilly", price:3.00, badge:"Extra", image:"https://images.unsplash.com/photo-1464306076886-da185f6a9d05?q=80&w=1200&auto=format&fit=crop", desc:"Cobertura adicional." },
+  { id:"add-02", group:"adicionais", subgroup:"todos", name:"Ovomaltine", price:3.00, badge:"Extra", image:"assets/img/produtos/ovomaltine.jpeg", desc:"Adicional crocante para enriquecer bebidas e sobremesas." },
+  { id:"add-03", group:"adicionais", subgroup:"todos", name:"Chantilly", price:3.00, badge:"Extra", image:"assets/img/produtos/chantilly.jpeg", desc:"Cobertura adicional." },,
   { id:"add-04", group:"adicionais", subgroup:"todos", name:"Leite Vegetal", price:4.00, badge:"Adicional", image:"https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=1200&auto=format&fit=crop", desc:"Opção vegetal para bebidas." },
-  { id:"add-05", group:"adicionais", subgroup:"todos", name:"Borda", price:5.00, badge:"Doce", image:"https://images.unsplash.com/photo-1499636136210-6f4ee915583e?q=80&w=1200&auto=format&fit=crop", desc:"Doce de leite ou creme de avelã." },
+  { id:"add-05", group:"adicionais", subgroup:"todos", name:"Borda", price:5.00, badge:"Doce", image:"assets/img/produtos/borda.jpeg", desc:"Doce de leite ou creme de avelã." },,
 
   // Doces
   { id:"doc-01", group:"doces", subgroup:"todos", name:"Bendito Bolinho", price:13.00, badge:"Vitrine", image:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1200&auto=format&fit=crop", desc:"Mini bolo com cobertura de ganache de chocolate. Consultar sabores." },
@@ -146,7 +168,107 @@ const catalog = [
   { id:"lan-06", group:"lanches", subgroup:"na-chapa", name:"Bauru com Ovo", price:17.00, badge:"Completo", image:"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?q=80&w=1200&auto=format&fit=crop", desc:"Pão francês, requeijão, presunto, muçarela, ovo, tomate e orégano." },
   { id:"lan-07", group:"lanches", subgroup:"na-chapa", name:"Sanduiche Natural", price:20.00, badge:"Leve", image:"https://images.unsplash.com/photo-1528736235302-52922df5c122?q=80&w=1200&auto=format&fit=crop", desc:"Pão integral, patê de frango, alface e tomate." },
   { id:"lan-08", group:"lanches", subgroup:"na-chapa", name:"Omelete", price:21.00, badge:"Forte", image:"https://images.unsplash.com/photo-1510693206972-df098062cb71?q=80&w=1200&auto=format&fit=crop", desc:"Ovos, tomate, presunto, muçarela e orégano." },
-  { id:"lan-09", group:"lanches", subgroup:"na-chapa", name:"Bacon & Ovo", price:22.00, badge:"Destaque", image:"https://images.unsplash.com/photo-1525351326368-efbb5cb6814d?q=80&w=1200&auto=format&fit=crop", desc:"Fatia de pão caseiro, requeijão, ovo mexido, bacon e muçarela." }
+  { id:"lan-09", group:"lanches", subgroup:"na-chapa", name:"Bacon & Ovo", price:22.00, badge:"Destaque", image:"https://images.unsplash.com/photo-1525351326368-efbb5cb6814d?q=80&w=1200&auto=format&fit=crop", desc:"Fatia de pão caseiro, requeijão, ovo mexido, bacon e muçarela." },
+  {
+    id: 'frapuccino-menta-e-chocolate',
+    name: 'Frapuccino Menta e Chocolate',
+    desc: 'Bebida gelada com chocolate, toque de menta e apresentação marcante para refrescar com sabor.',
+    price: 24,
+    group: 'bebidas-geladas',
+    subgroup: 'gelado',
+    badge: 'menta',
+    image: 'assets/img/produtos/frapuccino-menta-e-chocolate.jpeg'
+  },
+  {
+    id: 'chococcino',
+    name: 'Chococcino',
+    desc: 'Mistura cremosa de café com chocolate, gelada e encorpada para quem gosta de sabores intensos.',
+    price: 20,
+    group: 'bebidas-geladas',
+    subgroup: 'gelado',
+    badge: 'chocolate',
+    image: 'assets/img/produtos/chococcino.jpeg'
+  },
+  {
+    id: 'expresso-com-tonica',
+    name: 'Expresso com tônica',
+    desc: 'Espresso servido com tônica e gelo, combinação refrescante e surpreendente para dias quentes.',
+    price: 16,
+    group: 'bebidas-geladas',
+    subgroup: 'gelado',
+    badge: 'refrescante',
+    image: 'assets/img/produtos/expresso-com-tonica.jpeg'
+  },
+  {
+    id: 'frapuccino-super-mocha',
+    name: 'Frapuccino Super Mocha',
+    desc: 'Versão gelada e cremosa do mocha, com bastante chocolate e final indulgente.',
+    price: 24,
+    group: 'bebidas-geladas',
+    subgroup: 'gelado',
+    badge: 'premium',
+    image: 'assets/img/produtos/frapuccino-super-mocha.jpeg'
+  },
+  {
+    id: 'cappuccino-frozen',
+    name: 'Cappuccino Frozen',
+    desc: 'Cappuccino batido e bem cremoso, servido gelado para unir café e refrescância.',
+    price: 21,
+    group: 'bebidas-geladas',
+    subgroup: 'gelado',
+    badge: 'frozen',
+    image: 'assets/img/produtos/cappuccino-frozen.jpeg'
+  },
+  {
+    id: 'cha-matte-gelado',
+    name: 'Chá Matte Gelado',
+    desc: 'Chá matte servido bem gelado, leve e ideal para acompanhar um lanche da tarde.',
+    price: 14,
+    group: 'outras-bebidas',
+    subgroup: 'gelado',
+    badge: 'chá',
+    image: 'assets/img/produtos/cha-matte-gelado.jpeg'
+  },
+  {
+    id: 'soda-italiana',
+    name: 'Soda Italiana',
+    desc: 'Bebida gaseificada, leve e colorida, perfeita para quem quer algo sem café e bem refrescante.',
+    price: 16,
+    group: 'outras-bebidas',
+    subgroup: 'gelado',
+    badge: 'refrescante',
+    image: 'assets/img/produtos/soda-italiana.jpeg'
+  },
+  {
+    id: 'guarana-da-amazonia',
+    name: 'Guaraná da Amazônia',
+    desc: 'Bebida cremosa e gelada com sabor marcante de guaraná, ótima para uma pausa diferente.',
+    price: 18,
+    group: 'outras-bebidas',
+    subgroup: 'gelado',
+    badge: 'especial',
+    image: 'assets/img/produtos/guarana-da-amazonia.jpeg'
+  },
+  {
+    id: 'chocolate-gelado',
+    name: 'Chocolate gelado',
+    desc: 'Chocolate gelado cremoso, com calda marcante e visual que chama atenção logo de cara.',
+    price: 19,
+    group: 'bebidas-geladas',
+    subgroup: 'gelado',
+    badge: 'cremoso',
+    image: 'assets/img/produtos/chocolate-gelado.jpeg'
+  },
+  {
+    id: 'golden-lemonade',
+    name: 'Golden Lemonade',
+    desc: 'Limonada especial servida com gelo e toque dourado para uma opção cítrica e refrescante.',
+    price: 15,
+    group: 'outras-bebidas',
+    subgroup: 'gelado',
+    badge: 'cítrica',
+    image: 'assets/img/produtos/golden-lemonade.jpeg'
+  }
 ];
 
 const GROUPS = [

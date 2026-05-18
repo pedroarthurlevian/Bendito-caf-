@@ -10,3 +10,31 @@ Sequência das fotos adicionadas ao cardápio:
 8. Chai Latte -> assets/img/produtos/chai-latte.jpeg
 9. Cappuccino gelado -> assets/img/produtos/cappuccino-gelado.jpeg
 10. Americano gelado -> assets/img/produtos/americano-gelado.jpeg
+
+Novas fotos adicionadas ao cardápio:
+1. Frapuccino Menta e Chocolate -> assets/img/produtos/frapuccino-menta-e-chocolate.jpeg
+2. Chococcino -> assets/img/produtos/chococcino.jpeg
+3. Expresso com tônica -> assets/img/produtos/expresso-com-tonica.jpeg
+4. Frapuccino Super Mocha -> assets/img/produtos/frapuccino-super-mocha.jpeg
+5. Cappuccino Frozen -> assets/img/produtos/cappuccino-frozen.jpeg
+6. Chá Matte Gelado -> assets/img/produtos/cha-matte-gelado.jpeg
+7. Soda Italiana -> assets/img/produtos/soda-italiana.jpeg
+8. Guaraná da Amazônia -> assets/img/produtos/guarana-da-amazonia.jpeg
+9. Chocolate gelado -> assets/img/produtos/chocolate-gelado.jpeg
+10. Golden Lemonade -> assets/img/produtos/golden-lemonade.jpeg
+
+Novas fotos adicionadas (lote 3):
+1. Pink Lemonade -> assets/img/produtos/pink-lemonade.jpeg
+2. Chai Latte gelado -> assets/img/produtos/chai-latte-gelado.jpeg
+3. Matcha Puro -> assets/img/produtos/matcha-puro.jpeg
+4. Latte Matcha -> assets/img/produtos/latte-matcha.jpeg
+5. Latte Matcha com Morango -> assets/img/produtos/latte-matcha-com-morango.jpeg
+6. Latte Matcha com Coco e Menta -> assets/img/produtos/latte-matcha-com-coco-e-menta.jpeg
+7. Latte Matcha com Maracujá -> assets/img/produtos/latte-matcha-com-maracuja.jpeg
+8. Matcha Tropical -> assets/img/produtos/matcha-tropical.jpeg
+9. Matcha Maracujá Spritz -> assets/img/produtos/matcha-maracuja-spritz.jpeg
+10. Ovomaltine -> assets/img/produtos/ovomaltine.jpeg
+
+Lote 4 - adicionais
+11. Chantilly -> assets/img/produtos/chantilly.jpeg
+12. Borda -> assets/img/produtos/borda.jpeg
