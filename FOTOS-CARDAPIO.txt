@@ -1,0 +1,12 @@
+Sequência das fotos adicionadas ao cardápio:
+
+1. Cappuccino italiano -> assets/img/produtos/cappuccino-italiano.jpeg
+2. Cappuccino cremoso -> assets/img/produtos/cappuccino-cremoso.jpeg
+3. Expresso com chantilly -> assets/img/produtos/expresso-com-chantilly.jpeg
+4. Affogato -> assets/img/produtos/affogato.jpeg
+5. Mocha -> assets/img/produtos/mocha.jpeg
+6. Super Mocha -> assets/img/produtos/super-mocha.jpeg
+7. Cappuccino gourmet -> assets/img/produtos/cappuccino-gourmet.jpeg
+8. Chai Latte -> assets/img/produtos/chai-latte.jpeg
+9. Cappuccino gelado -> assets/img/produtos/cappuccino-gelado.jpeg
+10. Americano gelado -> assets/img/produtos/americano-gelado.jpeg

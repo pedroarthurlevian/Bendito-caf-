@@ -1,42 +1,109 @@
 import { supabase, isSupabaseConfigured, formatMoney } from './supabase.js'
 
 const catalog = [
-  // Bebidas quentes - com café
-  { id:"bqc-01", group:"bebidas-quentes", subgroup:"com-cafe", name:"Café Coado", price:6.00, badge:"Quente", image:"https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?q=80&w=1200&auto=format&fit=crop", desc:"Café coado tradicional." },
-  { id:"bqc-02", group:"bebidas-quentes", subgroup:"com-cafe", name:"Expresso", price:7.00, badge:"Clássico", image:"https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=1200&auto=format&fit=crop", desc:"Uma dose de café expresso." },
-  { id:"bqc-03", group:"bebidas-quentes", subgroup:"com-cafe", name:"Expresso Duplo", price:8.50, badge:"Intenso", image:"https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=1200&auto=format&fit=crop", desc:"Duas doses de café expresso." },
-  { id:"bqc-04", group:"bebidas-quentes", subgroup:"com-cafe", name:"Cappuccino Italiano", price:10.00, badge:"Favorito", image:"https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200&auto=format&fit=crop", desc:"Café expresso com leite." },
-  { id:"bqc-05", group:"bebidas-quentes", subgroup:"com-cafe", name:"Cappuccino Cremoso", price:12.00, badge:"Cremoso", image:"https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?q=80&w=1200&auto=format&fit=crop", desc:"Mistura para cappuccino e leite." },
-  { id:"bqc-06", group:"bebidas-quentes", subgroup:"com-cafe", name:"Café na Prensa Francesa", price:11.00, badge:"Método", image:"https://images.unsplash.com/photo-1494314671902-399b18174975?q=80&w=1200&auto=format&fit=crop", desc:"Café coado na prensa francesa." },
-  { id:"bqc-07", group:"bebidas-quentes", subgroup:"com-cafe", name:"Expresso com Chantilly", price:12.00, badge:"Doce", image:"https://images.unsplash.com/photo-1517256064527-09c73fc73e38?q=80&w=1200&auto=format&fit=crop", desc:"Café expresso duplo com chantilly." },
-  { id:"bqc-08", group:"bebidas-quentes", subgroup:"com-cafe", name:"Affogato", price:13.00, badge:"Sobremesa", image:"https://images.unsplash.com/photo-1464306076886-da185f6a9d05?q=80&w=1200&auto=format&fit=crop", desc:"Café expresso e sorvete." },
-  { id:"bqc-09", group:"bebidas-quentes", subgroup:"com-cafe", name:"Mocha", price:15.00, badge:"Chocolate", image:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=1200&auto=format&fit=crop", desc:"Café expresso, leite e chocolate." },
-  { id:"bqc-10", group:"bebidas-quentes", subgroup:"com-cafe", name:"Super Mocha", price:16.00, badge:"Assinatura", image:"https://images.unsplash.com/photo-1572441713132-51c75654db73?q=80&w=1200&auto=format&fit=crop", desc:"Café expresso, leite, chocolate e canela." },
-  { id:"bqc-11", group:"bebidas-quentes", subgroup:"com-cafe", name:"Cappuccino Gourmet", price:18.00, badge:"Premium", image:"https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=1200&auto=format&fit=crop", desc:"Mistura para cappuccino, leite, borda de creme de avelã e chantilly." },
-
-  // Bebidas quentes - sem café
-  { id:"bqs-01", group:"bebidas-quentes", subgroup:"sem-cafe", name:"Chá Matte", price:11.00, badge:"Sabores", image:"https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=1200&auto=format&fit=crop", desc:"Sabores: tradicional, limão, pêssego, gengibre, canela e tangerina." },
-  { id:"bqs-02", group:"bebidas-quentes", subgroup:"sem-cafe", name:"Chocolate Cremoso", price:12.00, badge:"Quente", image:"https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?q=80&w=1200&auto=format&fit=crop", desc:"Mistura para chocolate e leite." },
-  { id:"bqs-03", group:"bebidas-quentes", subgroup:"sem-cafe", name:"Chocolate Europeu", price:15.00, badge:"Intenso", image:"https://images.unsplash.com/photo-1517578239113-b03992dcdd25?q=80&w=1200&auto=format&fit=crop", desc:"Mistura para chocolate e leite com chocolate mais grosso." },
-  { id:"bqs-04", group:"bebidas-quentes", subgroup:"sem-cafe", name:"Chai Latte", price:18.00, badge:"Especiado", image:"https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=1200&auto=format&fit=crop", desc:"Xarope de chai e leite." },
-
-  // Bebidas geladas - com café
-  { id:"bgc-01", group:"bebidas-geladas", subgroup:"com-cafe", name:"Cappuccino", price:13.90, badge:"Gelado", image:"https://images.unsplash.com/photo-1517701550927-30cf4ba1f18f?q=80&w=1200&auto=format&fit=crop", desc:"Mistura para cappuccino, leite e gelo." },
-  { id:"bgc-02", group:"bebidas-geladas", subgroup:"com-cafe", name:"Americano Gelado", price:16.00, badge:"Refrescante", image:"https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=1200&auto=format&fit=crop", desc:"Café expresso duplo, água, leite, macadâmia e gelo." },
-  { id:"bgc-03", group:"bebidas-geladas", subgroup:"com-cafe", name:"Frappuccino Menta e Chocolate", price:17.00, badge:"Chamativo", image:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?q=80&w=1200&auto=format&fit=crop", desc:"Café expresso, leite, menta, calda de chocolate e gelo." },
-  { id:"bgc-04", group:"bebidas-geladas", subgroup:"com-cafe", name:"Chococcino", price:18.00, badge:"Doce", image:"https://images.unsplash.com/photo-1527169402691-feff5539e52c?q=80&w=1200&auto=format&fit=crop", desc:"Mistura para cappuccino e chocolate, ovomaltine, leite e gelo." },
-  { id:"bgc-05", group:"bebidas-geladas", subgroup:"com-cafe", name:"Expresso com Tônica", price:18.00, badge:"Diferente", image:"https://images.unsplash.com/photo-1517701604599-bb29b565090c?q=80&w=1200&auto=format&fit=crop", desc:"Café expresso duplo, água tônica, xarope e gelo. Sabores: gengibre, pêssego, avelã, caramelo salgado e baunilha." },
-  { id:"bgc-06", group:"bebidas-geladas", subgroup:"com-cafe", name:"Frappuccino Super Mocha", price:18.00, badge:"Mais pedido", image:"https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=1200&auto=format&fit=crop", desc:"Café expresso, leite, macadâmia, canela, calda de chocolate, chantilly e gelo." },
-  { id:"bgc-07", group:"bebidas-geladas", subgroup:"com-cafe", name:"Cappuccino Frozen", price:22.00, badge:"Premium", image:"https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1200&auto=format&fit=crop", desc:"Mistura para cappuccino, leite, sorvete de creme, caramelo salgado e gelo." },
-
-  // Bebidas geladas - sem café
-  { id:"bgs-01", group:"bebidas-geladas", subgroup:"sem-cafe", name:"Chá Matte", price:12.00, badge:"Sabores", image:"https://images.unsplash.com/photo-1499636136210-6f4ee915583e?q=80&w=1200&auto=format&fit=crop", desc:"Sabores: tradicional, limão, pêssego, gengibre, canela e tangerina." },
-  { id:"bgs-02", group:"bebidas-geladas", subgroup:"sem-cafe", name:"Soda Italiana", price:13.00, badge:"Colorida", image:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1200&auto=format&fit=crop", desc:"Água com gás, xarope e gelo. Sabores: maçã verde, gengibre, menta, cranberry, coco, tangerina, grenadine, morango e limão." },
-  { id:"bgs-03", group:"bebidas-geladas", subgroup:"sem-cafe", name:"Chocolate", price:13.90, badge:"Gelado", image:"https://images.unsplash.com/photo-1517578239113-b03992dcdd25?q=80&w=1200&auto=format&fit=crop", desc:"Mistura para chocolate, leite e gelo." },
-  { id:"bgs-04", group:"bebidas-geladas", subgroup:"sem-cafe", name:"Pink Limonade", price:15.00, badge:"Visual", image:"https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1200&auto=format&fit=crop", desc:"Purê de morango, suco de limão taiti e gelo." },
-  { id:"bgs-05", group:"bebidas-geladas", subgroup:"sem-cafe", name:"Chai Latte", price:18.00, badge:"Especiado", image:"https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=1200&auto=format&fit=crop", desc:"Xarope de chai, leite e gelo." },
-
-  // Matcha
+  {
+    id: 'cappuccino-italiano',
+    name: 'Cappuccino italiano',
+    desc: 'Espuma cremosa, café equilibrado e final clássico para uma pausa com cara de cafeteria italiana.',
+    price: 16,
+    group: 'quentes',
+    subgroup: 'cafes-especiais',
+    badge: 'clássico',
+    image: 'assets/img/produtos/cappuccino-italiano.jpeg'
+  },
+  {
+    id: 'cappuccino-cremoso',
+    name: 'Cappuccino cremoso',
+    desc: 'Cappuccino encorpado, textura aveludada e doçura suave para acompanhar um bom livro.',
+    price: 17,
+    group: 'quentes',
+    subgroup: 'cafes-especiais',
+    badge: 'cremoso',
+    image: 'assets/img/produtos/cappuccino-cremoso.jpeg'
+  },
+  {
+    id: 'expresso-com-chantilly',
+    name: 'Expresso com chantilly',
+    desc: 'Café intenso com uma camada generosa de chantilly para deixar o espresso mais marcante.',
+    price: 14,
+    group: 'quentes',
+    subgroup: 'cafes-especiais',
+    badge: 'especial',
+    image: 'assets/img/produtos/expresso-com-chantilly.jpeg'
+  },
+  {
+    id: 'affogato',
+    name: 'Affogato',
+    desc: 'A combinação elegante de café e creme gelado: sobremesa e café no mesmo momento.',
+    price: 19,
+    group: 'doces',
+    subgroup: 'sobremesas',
+    badge: 'sobremesa',
+    image: 'assets/img/produtos/affogato.jpeg'
+  },
+  {
+    id: 'mocha',
+    name: 'Mocha',
+    desc: 'Café com chocolate, leite cremoso e visual marcante para quem gosta de sabor intenso.',
+    price: 18,
+    group: 'quentes',
+    subgroup: 'cafes-especiais',
+    badge: 'chocolate',
+    image: 'assets/img/produtos/mocha.jpeg'
+  },
+  {
+    id: 'super-mocha',
+    name: 'Super Mocha',
+    desc: 'Versão mais indulgente do mocha, com camadas cremosas e presença forte de chocolate.',
+    price: 22,
+    group: 'quentes',
+    subgroup: 'cafes-especiais',
+    badge: 'premium',
+    image: 'assets/img/produtos/super-mocha.jpeg'
+  },
+  {
+    id: 'cappuccino-gourmet',
+    name: 'Cappuccino gourmet',
+    desc: 'Cappuccino especial com chantilly, final aromático e aquele toque de cafeteria aconchegante.',
+    price: 21,
+    group: 'quentes',
+    subgroup: 'cafes-especiais',
+    badge: 'gourmet',
+    image: 'assets/img/produtos/cappuccino-gourmet.jpeg'
+  },
+  {
+    id: 'chai-latte',
+    name: 'Chai Latte',
+    desc: 'Leite cremoso com especiarias, canela e aroma acolhedor para uma pausa diferente.',
+    price: 19,
+    group: 'quentes',
+    subgroup: 'bebidas-especiais',
+    badge: 'aromático',
+    image: 'assets/img/produtos/chai-latte.jpeg'
+  },
+  {
+    id: 'cappuccino-gelado',
+    name: 'Cappuccino gelado',
+    desc: 'Café gelado cremoso com caramelo, perfeito para dias quentes e momentos leves.',
+    price: 20,
+    group: 'gelados',
+    subgroup: 'cafes-gelados',
+    badge: 'gelado',
+    image: 'assets/img/produtos/cappuccino-gelado.jpeg'
+  },
+  {
+    id: 'americano-gelado',
+    name: 'Americano gelado',
+    desc: 'Café gelado com leite em movimento, refrescante, bonito e direto ao ponto.',
+    price: 15,
+    group: 'gelados',
+    subgroup: 'cafes-gelados',
+    badge: 'refrescante',
+    image: 'assets/img/produtos/americano-gelado.jpeg'
+  },
+// Bebidas quentes - com café
+// Bebidas geladas - com café
+// Matcha
   { id:"mat-01", group:"matcha", subgroup:"quente", name:"Matcha Puro", price:11.00, badge:"Quente", image:"https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=1200&auto=format&fit=crop", desc:"Matcha e água." },
   { id:"mat-02", group:"matcha", subgroup:"quente", name:"Latte Matcha", price:15.00, badge:"Quente", image:"https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=1200&auto=format&fit=crop", desc:"Matcha, leite e coco." },
   { id:"mat-03", group:"matcha", subgroup:"gelado", name:"Latte Matcha com Morango", price:18.00, badge:"Gelado", image:"https://images.unsplash.com/photo-1515823064-d6e0c04616a7?q=80&w=1200&auto=format&fit=crop", desc:"Matcha, leite, purê de morango e gelo." },
@@ -101,7 +168,11 @@ const SUBGROUP_LABELS = {
   "gelado":"Gelado",
   "todos":"Todos",
   "na-chapa":"Na chapa"
-};
+
+  'cafes-especiais': 'Cafés especiais',
+  'bebidas-especiais': 'Bebidas especiais',
+  'cafes-gelados': 'Cafés gelados',
+  'sobremesas': 'Sobremesas',};
 
 
 const testimonials = [
