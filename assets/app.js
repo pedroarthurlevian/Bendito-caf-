@@ -6,8 +6,8 @@ const catalog = [
     name: 'Cappuccino italiano',
     desc: 'Espuma cremosa, café equilibrado e final clássico para uma pausa com cara de cafeteria italiana.',
     price: 16,
-    group: 'quentes',
-    subgroup: 'cafes-especiais',
+    group: 'bebidas-quentes',
+    subgroup: 'com-cafe',
     badge: 'clássico',
     image: 'assets/img/produtos/cappuccino-italiano.jpeg'
   },
@@ -16,8 +16,8 @@ const catalog = [
     name: 'Cappuccino cremoso',
     desc: 'Cappuccino encorpado, textura aveludada e doçura suave para acompanhar um bom livro.',
     price: 17,
-    group: 'quentes',
-    subgroup: 'cafes-especiais',
+    group: 'bebidas-quentes',
+    subgroup: 'com-cafe',
     badge: 'cremoso',
     image: 'assets/img/produtos/cappuccino-cremoso.jpeg'
   },
@@ -26,8 +26,8 @@ const catalog = [
     name: 'Expresso com chantilly',
     desc: 'Café intenso com uma camada generosa de chantilly para deixar o espresso mais marcante.',
     price: 14,
-    group: 'quentes',
-    subgroup: 'cafes-especiais',
+    group: 'bebidas-quentes',
+    subgroup: 'com-cafe',
     badge: 'especial',
     image: 'assets/img/produtos/expresso-com-chantilly.jpeg'
   },
@@ -37,7 +37,7 @@ const catalog = [
     desc: 'A combinação elegante de café e creme gelado: sobremesa e café no mesmo momento.',
     price: 19,
     group: 'doces',
-    subgroup: 'sobremesas',
+    subgroup: 'todos',
     badge: 'sobremesa',
     image: 'assets/img/produtos/affogato.jpeg'
   },
@@ -46,8 +46,8 @@ const catalog = [
     name: 'Mocha',
     desc: 'Café com chocolate, leite cremoso e visual marcante para quem gosta de sabor intenso.',
     price: 18,
-    group: 'quentes',
-    subgroup: 'cafes-especiais',
+    group: 'bebidas-quentes',
+    subgroup: 'com-cafe',
     badge: 'chocolate',
     image: 'assets/img/produtos/mocha.jpeg'
   },
@@ -56,8 +56,8 @@ const catalog = [
     name: 'Super Mocha',
     desc: 'Versão mais indulgente do mocha, com camadas cremosas e presença forte de chocolate.',
     price: 22,
-    group: 'quentes',
-    subgroup: 'cafes-especiais',
+    group: 'bebidas-quentes',
+    subgroup: 'com-cafe',
     badge: 'premium',
     image: 'assets/img/produtos/super-mocha.jpeg'
   },
@@ -66,8 +66,8 @@ const catalog = [
     name: 'Cappuccino gourmet',
     desc: 'Cappuccino especial com chantilly, final aromático e aquele toque de cafeteria aconchegante.',
     price: 21,
-    group: 'quentes',
-    subgroup: 'cafes-especiais',
+    group: 'bebidas-quentes',
+    subgroup: 'com-cafe',
     badge: 'gourmet',
     image: 'assets/img/produtos/cappuccino-gourmet.jpeg'
   },
@@ -76,8 +76,8 @@ const catalog = [
     name: 'Chai Latte',
     desc: 'Leite cremoso com especiarias, canela e aroma acolhedor para uma pausa diferente.',
     price: 19,
-    group: 'quentes',
-    subgroup: 'bebidas-especiais',
+    group: 'bebidas-quentes',
+    subgroup: 'sem-cafe',
     badge: 'aromático',
     image: 'assets/img/produtos/chai-latte.jpeg'
   },
@@ -86,8 +86,8 @@ const catalog = [
     name: 'Cappuccino gelado',
     desc: 'Café gelado cremoso com caramelo, perfeito para dias quentes e momentos leves.',
     price: 20,
-    group: 'gelados',
-    subgroup: 'cafes-gelados',
+    group: 'bebidas-geladas',
+    subgroup: 'gelado',
     badge: 'gelado',
     image: 'assets/img/produtos/cappuccino-gelado.jpeg'
   },
@@ -96,8 +96,8 @@ const catalog = [
     name: 'Americano gelado',
     desc: 'Café gelado com leite em movimento, refrescante, bonito e direto ao ponto.',
     price: 15,
-    group: 'gelados',
-    subgroup: 'cafes-gelados',
+    group: 'bebidas-geladas',
+    subgroup: 'gelado',
     badge: 'refrescante',
     image: 'assets/img/produtos/americano-gelado.jpeg'
   },
@@ -167,7 +167,7 @@ const SUBGROUP_LABELS = {
   "quente":"Quente",
   "gelado":"Gelado",
   "todos":"Todos",
-  "na-chapa":"Na chapa"
+  "na-chapa":"Na chapa",
 
   'cafes-especiais': 'Cafés especiais',
   'bebidas-especiais': 'Bebidas especiais',
