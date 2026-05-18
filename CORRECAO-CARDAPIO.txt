@@ -1,5 +1,0 @@
-Correção aplicada:
-- Os produtos novos agora usam os grupos reais do site:
-  bebidas-quentes, bebidas-geladas e doces.
-- Isso evita o cardápio sumir quando uma aba/filtro está selecionado.
-- Também foi corrigida uma vírgula no bloco SUBGROUP_LABELS.
