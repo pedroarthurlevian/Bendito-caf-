@@ -1,4 +1,0 @@
-Correções aplicadas:
-- Corrigido bloco SUBGROUP_LABELS.
-- Reconstruído bloco Matcha para evitar quebra/comentário acidental no JavaScript.
-- Inserida a Publishable key pública no assets/supabase.js.
