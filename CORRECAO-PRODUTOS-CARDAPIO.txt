@@ -1,0 +1,1 @@
+Correção aplicada: removidos buracos no array do cardápio, import do Supabase no carregamento inicial foi removido para não derrubar o cardápio, e a Publishable key foi mantida em assets/supabase.js.

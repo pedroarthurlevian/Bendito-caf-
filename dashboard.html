@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bendito Café | Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/dashboard.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="dashboard.html">
+        <span class="brand__seal">B</span>
+        <span>
+          <strong>Bendito Café</strong>
+          <small>Dashboard Supabase</small>
+        </span>
+      </a>
+      <div class="topbar__actions">
+        <a class="ghost-btn" href="pedidos-pendentes.html">Pedidos</a>
+        <a class="ghost-btn" href="caixa.html">Caixa</a>
+        <button id="logoutButton" class="ghost-btn">Sair</button>
+        <a class="primary-btn" href="index.html">Voltar ao site</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard">
+    <div class="container">
+      <section class="hero">
+        <div>
+          <span class="eyebrow">Painel operacional</span>
+          <h1>Pedidos, reservas, caixa e visão do mês.</h1>
+          <p>Esse painel lê pedidos, reservas e pagamentos direto do Supabase.</p>
+        </div>
+        <div class="quick-box">
+          <label>Mês principal
+            <select id="mainMonthSelect"></select>
+          </label>
+          <label>Comparar com
+            <select id="compareMonthSelect"></select>
+          </label>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card highlight"><span>Pedidos pendentes</span><strong id="pendingOrders">0</strong><small>Aguardando ação</small></article>
+        <article class="stat-card"><span>Pedidos hoje</span><strong id="ordersToday">0</strong><small>Movimento do dia</small></article>
+        <article class="stat-card"><span>Faturamento hoje</span><strong id="revenueToday">R$ 0,00</strong><small>Entradas do dia</small></article>
+        <article class="stat-card"><span>Reservas hoje</span><strong id="reservationsToday">0</strong><small>Reservas registradas</small></article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel">
+          <div class="panel__header"><div><span class="eyebrow">Financeiro</span><h2>Comparativo mensal</h2></div></div>
+          <div class="finance-cards">
+            <div class="info-card"><span>Mês principal</span><strong id="mainMonthRevenue">R$ 0,00</strong></div>
+            <div class="info-card"><span>Mês comparado</span><strong id="compareMonthRevenue">R$ 0,00</strong></div>
+            <div class="info-card"><span>Diferença</span><strong id="monthDifference">R$ 0,00</strong></div>
+          </div>
+          <div class="simple-summary" id="monthlyBreakdown"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__header"><div><span class="eyebrow">Caixa</span><h2>Entradas por pagamento</h2></div></div>
+          <div class="simple-list" id="cashFlowSummary"></div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel">
+          <div class="panel__header"><div><span class="eyebrow">Pedidos recentes</span><h2>Últimos pedidos</h2></div></div>
+          <div class="simple-list" id="recentOrders"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__header"><div><span class="eyebrow">Reservas</span><h2>Últimas reservas</h2></div></div>
+          <div class="simple-list" id="recentReservations"></div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel">
+          <div class="panel__header"><div><span class="eyebrow">Itens em destaque</span><h2>Mais vendidos</h2></div></div>
+          <div class="simple-list" id="topItemsSimple"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__header"><div><span class="eyebrow">Mês a mês</span><h2>Faturamento mensal</h2></div></div>
+          <div class="simple-list" id="monthList"></div>
+        </article>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="assets/auth-guard.js"></script>
+  <script type="module" src="assets/dashboard.js"></script>
+</body>
+</html>
