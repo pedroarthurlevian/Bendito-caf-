@@ -107,7 +107,7 @@
           <span class="card-label">Queridinho do público</span>
           <h3>Frappuccino Super Mocha</h3>
           <p>Café expresso, leite, macadâmia, canela, calda de chocolate, chantilly e gelo.</p>
-          <button class="small-btn" data-featured-add="bgc-06">Adicionar ao carrinho</button>
+          <button class="small-btn" data-featured-add="frapuccino-super-mocha">Adicionar ao carrinho</button>
         </article>
       </div>
     </div>
@@ -400,13 +400,13 @@
               <input type="text" id="resName" required placeholder="Seu nome" />
             </label>
             <label>Telefone
-              <input type="tel" id="resPhone" required placeholder="(44) 99999-9999" />
+              <input type="tel" id="resPhone" required maxlength="20" placeholder="(44) 99999-9999" autocomplete="tel" />
             </label>
             <label>Data
               <input type="date" id="resDate" required />
             </label>
             <label>Horário
-              <input type="time" id="resTime" required />
+              <input type="time" id="resTime" required min="09:00" max="19:00" />
             </label>
             <label>Pessoas
               <select id="resGuests" required>
@@ -453,7 +453,7 @@
             <article>
               <strong>Contato</strong>
               <span>+55 44 99905-7757</span>
-              <span>benditocafépvai@gmail.com</span>
+              <span>benditocafepvai@gmail.com</span>
             </article>
             <article>
               <strong>Instagram</strong>
@@ -527,8 +527,8 @@
       </div>
       <div>
         <h4>Contato</h4>
-        <a href="tel:+5544988881122">+55 44 99905-7757</a>
-        <a href="mailto:benditocafépvai@gmail.com">benditocafépvai@gmail.com</a>
+        <a href="tel:+5544999057757">+55 44 99905-7757</a>
+        <a href="mailto:benditocafepvai@gmail.com">benditocafepvai@gmail.com</a>
         <a href="https://www.instagram.com/benditocafeparanavai/" target="_blank" rel="noopener noreferrer">@benditocafeparanavai</a>
       </div>
     </div>
@@ -548,7 +548,15 @@
       <div class="order-customer-box" style="display:grid;gap:10px;margin-bottom:16px;">
         <label style="display:grid;gap:8px;font-weight:700;color:#1b261f;">
           Nome do cliente
-          <input type="text" id="customerNameInput" placeholder="Digite o nome para o pedido" style="border-radius:14px;border:1px solid rgba(27,38,31,.12);padding:14px;background:rgba(255,255,255,.78);" />
+          <input type="text" id="customerNameInput" maxlength="80" placeholder="Digite o nome para o pedido" autocomplete="name" style="border-radius:14px;border:1px solid rgba(27,38,31,.12);padding:14px;background:rgba(255,255,255,.78);" />
+        </label>
+        <label style="display:grid;gap:8px;font-weight:700;color:#1b261f;">
+          Telefone do cliente
+          <input type="tel" id="customerPhoneInput" maxlength="20" placeholder="(44) 99999-9999" autocomplete="tel" style="border-radius:14px;border:1px solid rgba(27,38,31,.12);padding:14px;background:rgba(255,255,255,.78);" />
+        </label>
+        <label style="display:grid;gap:8px;font-weight:700;color:#1b261f;">
+          Observação do pedido
+          <textarea id="orderNoteInput" maxlength="280" rows="3" placeholder="Ex: sem chantilly, retirar no balcão..." style="border-radius:14px;border:1px solid rgba(27,38,31,.12);padding:14px;background:rgba(255,255,255,.78);resize:vertical;"></textarea>
         </label>
         <div style="padding:14px 16px;border-radius:16px;background:rgba(16,32,22,.06);border:1px solid rgba(27,38,31,.08);color:#233128;">
           <strong style="display:block;margin-bottom:6px;">Pagamento</strong>

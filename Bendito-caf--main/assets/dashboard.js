@@ -1,6 +1,8 @@
-import { supabase, formatMoney, formatDateTime, monthKey, monthLabel } from './supabase.js'
+import { supabase, formatMoney, formatDateTime, monthKey, monthLabel, escapeHTML, normalizeOrderItems, orderTotal, subscribeToTable } from './supabase.js'
 
 const money = formatMoney
+let dashboardData = { orders: [], reservations: [], cashEntries: [] }
+let isRendering = false
 
 function isToday(value) {
   const date = new Date(value)
@@ -9,7 +11,7 @@ function isToday(value) {
 }
 
 function getItems(order) {
-  return order.items_json || []
+  return normalizeOrderItems(order)
 }
 
 function getTopItems(orders) {
@@ -46,8 +48,8 @@ function buildMonthSelectors(monthMap) {
   const currentMain = main.value
   const currentCompare = compare.value
 
-  main.innerHTML = keys.map(key => `<option value="${key}">${monthLabel(key)}</option>`).join('')
-  compare.innerHTML = '<option value="">Não comparar</option>' + keys.map(key => `<option value="${key}">${monthLabel(key)}</option>`).join('')
+  main.innerHTML = keys.map(key => `<option value="${escapeHTML(key)}">${escapeHTML(monthLabel(key))}</option>`).join('')
+  compare.innerHTML = '<option value="">Não comparar</option>' + keys.map(key => `<option value="${escapeHTML(key)}">${escapeHTML(monthLabel(key))}</option>`).join('')
 
   main.value = keys.includes(currentMain) ? currentMain : keys[0]
   compare.value = keys.includes(currentCompare) ? currentCompare : (keys[1] || '')
@@ -81,8 +83,8 @@ function renderMonthlyFinance(monthMap) {
     ['Total do mês comparado', compareKey ? money(compareRevenue) : '—']
   ].map(([label, value]) => `
     <div class="summary-row">
-      <span>${label}</span>
-      <strong>${value}</strong>
+      <span>${escapeHTML(label)}</span>
+      <strong>${escapeHTML(value)}</strong>
     </div>
   `).join('')
 }
@@ -103,7 +105,7 @@ function renderCashSummary(entries) {
 
   document.getElementById('cashFlowSummary').innerHTML = Object.entries(totals).map(([label, value]) => `
     <div class="list-card">
-      <strong>${label}</strong>
+      <strong>${escapeHTML(label)}</strong>
       <span>${money(value)}</span>
     </div>
   `).join('')
@@ -120,15 +122,15 @@ async function loadData() {
   if (reservationsRes.error) throw reservationsRes.error
   if (cashRes.error) throw cashRes.error
 
-  return {
+  dashboardData = {
     orders: ordersRes.data || [],
     reservations: reservationsRes.data || [],
     cashEntries: cashRes.data || []
   }
 }
 
-async function render() {
-  const { orders, reservations, cashEntries } = await loadData()
+function renderFromData() {
+  const { orders, reservations, cashEntries } = dashboardData
 
   const pending = orders.filter(o => !['Entregue', 'Pago no caixa'].includes(o.payment_status || 'Aguardando pagamento no caixa'))
   const ordersToday = orders.filter(o => isToday(o.created_at))
@@ -146,37 +148,45 @@ async function render() {
 
   document.getElementById('recentOrders').innerHTML = orders.length ? orders.slice(0, 6).map(order => `
     <div class="list-card">
-      <strong>${order.customer_name || 'Sem nome'}</strong>
-      <span>${formatDateTime(order.created_at)}</span>
-      <span>${getItems(order).map(item => `${item.name} (${item.quantity})`).join(', ') || '-'}</span>
-      <small><span class="status-pill">${order.payment_status || 'Aguardando pagamento no caixa'}</span></small>
+      <strong>${escapeHTML(order.customer_name || 'Sem nome')}</strong>
+      <span>${escapeHTML(formatDateTime(order.created_at))}</span>
+      <span>${getItems(order).map(item => `${escapeHTML(item.name)} (${escapeHTML(item.quantity)})`).join(', ') || '-'}</span>
+      <small><span class="status-pill">${escapeHTML(order.payment_status || 'Aguardando pagamento no caixa')}</span> • ${money(orderTotal(order))}</small>
     </div>
   `).join('') : '<div class="empty">Ainda não há pedidos.</div>'
 
   document.getElementById('recentReservations').innerHTML = reservations.length ? reservations.slice(0, 6).map(item => `
     <div class="list-card">
-      <strong>${item.name || 'Sem nome'}</strong>
-      <span>${formatDateTime(item.created_at)}</span>
-      <span>${item.date || '-'} • ${item.time || '-'}</span>
-      <small>${item.guests || '-'} • ${item.occasion || '-'}</small>
+      <strong>${escapeHTML(item.name || 'Sem nome')}</strong>
+      <span>${escapeHTML(formatDateTime(item.created_at))}</span>
+      <span>${escapeHTML(item.date || '-')} • ${escapeHTML(item.time || '-')}</span>
+      <small>${escapeHTML(item.guests || '-')} • ${escapeHTML(item.occasion || '-')}</small>
     </div>
   `).join('') : '<div class="empty">Ainda não há reservas.</div>'
 
   const topItems = getTopItems(orders)
   document.getElementById('topItemsSimple').innerHTML = topItems.length ? topItems.map(([name, qty]) => `
     <div class="list-card">
-      <strong>${name}</strong>
-      <span>${qty} vendidos</span>
+      <strong>${escapeHTML(name)}</strong>
+      <span>${escapeHTML(qty)} vendidos</span>
     </div>
   `).join('') : '<div class="empty">Ainda não há itens vendidos.</div>'
 
   const months = [...monthMap.entries()].sort((a, b) => b[0].localeCompare(a[0]))
   document.getElementById('monthList').innerHTML = months.length ? months.map(([key, value]) => `
     <div class="list-card">
-      <strong>${monthLabel(key)}</strong>
+      <strong>${escapeHTML(monthLabel(key))}</strong>
       <span>${money(value)}</span>
     </div>
   `).join('') : '<div class="empty">Ainda não há faturamento mensal.</div>'
+}
+
+async function render() {
+  if (isRendering) return
+  isRendering = true
+  await loadData()
+  renderFromData()
+  isRendering = false
 }
 
 document.getElementById('logoutButton')?.addEventListener('click', async () => {
@@ -184,10 +194,14 @@ document.getElementById('logoutButton')?.addEventListener('click', async () => {
   window.location.href = 'painel-login.html'
 })
 
-document.getElementById('mainMonthSelect')?.addEventListener('change', render)
-document.getElementById('compareMonthSelect')?.addEventListener('change', render)
+document.getElementById('mainMonthSelect')?.addEventListener('change', renderFromData)
+document.getElementById('compareMonthSelect')?.addEventListener('change', renderFromData)
 
-render().catch(error => {
+render().then(() => {
+  ;['orders', 'reservations', 'cash_entries'].forEach(table => {
+    subscribeToTable(table, () => render().catch(console.error))
+  })
+}).catch(error => {
   console.error(error)
   alert('Não foi possível carregar o dashboard. Confira sua chave, login e policies no Supabase.')
 })

@@ -5,9 +5,9 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
   1) Você já encontrou a Project URL:
      https://lhqwmywcxtpronmjufgc.supabase.co
 
-  2) Falta colar a sua Publishable key abaixo.
+  2) Cole abaixo a Publishable key do seu projeto.
      Ela começa com: sb_publishable_
-     NÃO use a chave sb_secret_.
+     NÃO use a chave sb_secret_ no front-end.
 */
 
 const supabaseUrl = 'https://lhqwmywcxtpronmjufgc.supabase.co'
@@ -17,6 +17,19 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 export function isSupabaseConfigured() {
   return Boolean(supabaseAnonKey && !supabaseAnonKey.includes('COLE_AQUI'))
+}
+
+export function escapeHTML(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
+export function safeAttr(value) {
+  return escapeHTML(value).replace(/`/g, '&#096;')
 }
 
 export function formatMoney(value) {
@@ -36,13 +49,28 @@ export function formatDateTime(value) {
   })
 }
 
+export function normalizeOrderItems(order) {
+  const rawItems = order?.items_json || order?.items || []
+  if (!Array.isArray(rawItems)) return []
+
+  return rawItems.map(item => ({
+    id: String(item?.id || item?.product_id || ''),
+    name: String(item?.name || 'Item sem nome'),
+    price: Number(item?.price || item?.unit_price || 0),
+    quantity: Math.max(0, Number(item?.quantity || 0)),
+    total: Number(item?.total || item?.line_total || (Number(item?.price || item?.unit_price || 0) * Number(item?.quantity || 0)))
+  })).filter(item => item.quantity > 0)
+}
+
 export function orderTotal(order) {
-  const items = order.items_json || order.items || []
-  const subtotal = items.reduce((sum, item) => {
+  const storedTotal = Number(order?.order_total)
+  if (Number.isFinite(storedTotal) && storedTotal > 0) return storedTotal
+
+  const subtotal = normalizeOrderItems(order).reduce((sum, item) => {
     return sum + Number(item.price || 0) * Number(item.quantity || 0)
   }, 0)
 
-  return subtotal * (order.coupon === 'BENDITO10' ? 0.9 : 1)
+  return Number((subtotal * (order?.coupon === 'BENDITO10' ? 0.9 : 1)).toFixed(2))
 }
 
 export function monthKey(value) {
@@ -56,4 +84,11 @@ export function monthLabel(key) {
   const [year, month] = key.split('-').map(Number)
   const date = new Date(year, month - 1, 1)
   return date.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })
+}
+
+export function subscribeToTable(table, callback) {
+  return supabase
+    .channel(`bendito-${table}-changes`)
+    .on('postgres_changes', { event: '*', schema: 'public', table }, callback)
+    .subscribe()
 }

@@ -388,6 +388,144 @@ function money(value) {
   return formatMoney(value)
 }
 
+function escapeHTML(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
+function safeAttr(value) {
+  return escapeHTML(value).replace(/`/g, '&#096;')
+}
+
+function safeImageUrl(url) {
+  const value = String(url || '').trim()
+  const isLocal = value.startsWith('assets/img/')
+  const isTrustedRemote = value.startsWith('https://images.unsplash.com/')
+  if (!isLocal && !isTrustedRemote) return ''
+  return value.replace(/["'()\\]/g, '')
+}
+
+function imageStyle(url) {
+  const safeUrl = safeImageUrl(url)
+  return safeUrl ? `style="background-image:url('${safeUrl}')"` : ''
+}
+
+function cleanText(value, max = 120) {
+  return String(value || '').trim().replace(/\s+/g, ' ').slice(0, max)
+}
+
+function normalizePhone(value) {
+  return String(value || '').replace(/\D/g, '').slice(0, 13)
+}
+
+function phoneLooksValid(value) {
+  const digits = normalizePhone(value)
+  return digits.length >= 10 && digits.length <= 13
+}
+
+function getTodayISODate() {
+  const now = new Date()
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset())
+  return now.toISOString().slice(0, 10)
+}
+
+function reservationDateIsValid(dateValue) {
+  if (!dateValue) return false
+  const date = new Date(`${dateValue}T12:00:00`)
+  if (Number.isNaN(date.getTime())) return false
+  const today = new Date(`${getTodayISODate()}T00:00:00`)
+  const day = date.getDay()
+  return date >= today && day >= 1 && day <= 6
+}
+
+function reservationTimeIsValid(timeValue) {
+  if (!/^\d{2}:\d{2}$/.test(timeValue || '')) return false
+  return (timeValue >= '09:00' && timeValue <= '12:00') || (timeValue >= '15:00' && timeValue <= '19:00')
+}
+
+function setLoading(button, isLoading, loadingText = 'Enviando...') {
+  if (!button) return
+  if (isLoading) {
+    button.dataset.originalText = button.textContent
+    button.textContent = loadingText
+    button.disabled = true
+  } else {
+    button.textContent = button.dataset.originalText || button.textContent
+    button.disabled = false
+  }
+}
+
+function getSafeCartItems() {
+  return cartDetails().map(item => ({
+    product_id: item.id,
+    id: item.id,
+    name: cleanText(item.name, 100),
+    price: Number(item.price || 0),
+    quantity: Math.max(1, Math.min(99, Number(item.quantity || 1))),
+    total: Number(item.total || 0),
+    group: item.group,
+    badge: cleanText(item.badge, 50)
+  }))
+}
+
+function cartTotalValue() {
+  const subtotal = cartDetails().reduce((acc, item) => acc + item.total, 0)
+  const discount = state.coupon === 'BENDITO10' ? subtotal * 0.1 : 0
+  return Number((subtotal - discount).toFixed(2))
+}
+
+async function createOrderWithSupabase(supabaseClient, payload) {
+  const rpcItems = payload.items.map(item => ({ id: item.id, quantity: item.quantity }))
+
+  const { data, error } = await supabaseClient.rpc('create_public_order', {
+    p_customer_name: payload.customer_name,
+    p_customer_phone: payload.customer_phone,
+    p_order_note: payload.order_note,
+    p_coupon: payload.coupon,
+    p_items: rpcItems
+  })
+
+  if (!error) return { data, error: null, usedRpc: true }
+
+  const message = String(error.message || '').toLowerCase()
+  const missingRpc = message.includes('function') || message.includes('schema cache') || message.includes('could not find')
+  if (!missingRpc) return { data: null, error, usedRpc: true }
+
+  const fallbackOrder = {
+    customer_name: payload.customer_name,
+    customer_phone: payload.customer_phone,
+    order_note: payload.order_note,
+    payment_method: 'Pagamento no caixa',
+    payment_status: 'Aguardando pagamento no caixa',
+    coupon: payload.coupon || null,
+    source: 'site',
+    order_total: payload.order_total,
+    items_json: payload.items
+  }
+
+  const fullLegacy = await supabaseClient.from('orders').insert([fallbackOrder])
+  if (!fullLegacy.error) return { data: fullLegacy.data, error: null, usedRpc: false }
+
+  const legacyMessage = String(fullLegacy.error.message || '').toLowerCase()
+  const columnMissing = legacyMessage.includes('column') || legacyMessage.includes('schema cache')
+  if (!columnMissing) return { data: null, error: fullLegacy.error, usedRpc: false }
+
+  const compatibleLegacy = await supabaseClient.from('orders').insert([{
+    customer_name: payload.customer_name,
+    payment_method: 'Pagamento no caixa',
+    payment_status: 'Aguardando pagamento no caixa',
+    coupon: payload.coupon || null,
+    source: 'site',
+    items_json: payload.items
+  }])
+
+  return { data: compatibleLegacy.data, error: compatibleLegacy.error, usedRpc: false }
+}
+
 function setQty(id, amount) {
   qtyState[id] = Math.max(1, amount)
   const el = document.getElementById(`qty-${id}`)
@@ -406,8 +544,8 @@ function groupLabel(key) {
 function renderTabs() {
   if (!elements.tabs) return
   elements.tabs.innerHTML = GROUPS.map(group => `
-    <button class="tab-btn ${state.group === group.key ? 'active' : ''}" data-group="${group.key}">
-      ${group.label}
+    <button class="tab-btn ${state.group === group.key ? 'active' : ''}" data-group="${safeAttr(group.key)}">
+      ${escapeHTML(group.label)}
     </button>
   `).join('')
 
@@ -421,8 +559,8 @@ function renderTabs() {
   const subtabOptions = ['all', ...subgroups]
 
   elements.subtabs.innerHTML = subtabOptions.map(sub => `
-    <button class="subtab-btn ${state.subgroup === sub ? 'active' : ''}" data-subgroup="${sub}">
-      ${sub === 'all' ? 'Todos' : (SUBGROUP_LABELS[sub] || sub)}
+    <button class="subtab-btn ${state.subgroup === sub ? 'active' : ''}" data-subgroup="${safeAttr(sub)}">
+      ${escapeHTML(sub === 'all' ? 'Todos' : (SUBGROUP_LABELS[sub] || sub))}
     </button>
   `).join('')
 }
@@ -460,24 +598,24 @@ function renderMenu() {
 
   elements.menuGrid.innerHTML = items.map(item => `
     <article class="menu-card">
-      <div class="menu-card__image" style="background-image:url('${item.image}')">
-        <span class="menu-card__badge">${item.badge}</span>
-        <button class="favorite-btn ${state.favorites.includes(item.id) ? 'active' : ''}" data-favorite="${item.id}">♥</button>
+      <div class="menu-card__image" ${imageStyle(item.image)}>
+        <span class="menu-card__badge">${escapeHTML(item.badge)}</span>
+        <button class="favorite-btn ${state.favorites.includes(item.id) ? 'active' : ''}" data-favorite="${safeAttr(item.id)}" aria-label="Favoritar ${safeAttr(item.name)}">♥</button>
       </div>
       <div class="menu-card__body">
-        <h3>${item.name}</h3>
-        <p>${item.desc}</p>
+        <h3>${escapeHTML(item.name)}</h3>
+        <p>${escapeHTML(item.desc)}</p>
         <div class="meta-row">
           <span class="price">${money(item.price)}</span>
-          <span class="category-chip">${groupLabel(item.group)}</span>
+          <span class="category-chip">${escapeHTML(groupLabel(item.group))}</span>
         </div>
         <div class="actions-row">
           <div class="qty-box">
-            <button data-action="minus" data-id="${item.id}">−</button>
-            <span id="qty-${item.id}">${getQty(item.id)}</span>
-            <button data-action="plus" data-id="${item.id}">+</button>
+            <button data-action="minus" data-id="${safeAttr(item.id)}" aria-label="Diminuir quantidade">−</button>
+            <span id="qty-${safeAttr(item.id)}">${getQty(item.id)}</span>
+            <button data-action="plus" data-id="${safeAttr(item.id)}" aria-label="Aumentar quantidade">+</button>
           </div>
-          <button class="add-btn" data-add="${item.id}">Adicionar</button>
+          <button class="add-btn" data-add="${safeAttr(item.id)}">Adicionar</button>
         </div>
       </div>
     </article>
@@ -492,9 +630,16 @@ function toggleFavorite(id) {
 }
 
 function addToCart(id, quantity = 1) {
+  const product = catalog.find(item => item && item.id === id)
+  if (!product) {
+    notify(elements.checkoutFeedback, 'Produto não encontrado no cardápio. Atualize a página e tente novamente.', 4500)
+    return
+  }
+
+  const safeQuantity = Math.max(1, Math.min(99, Number(quantity || 1)))
   const exists = state.cart.find(item => item.id === id)
-  if (exists) exists.quantity += quantity
-  else state.cart.push({ id, quantity })
+  if (exists) exists.quantity = Math.min(99, exists.quantity + safeQuantity)
+  else state.cart.push({ id, quantity: safeQuantity })
   save('bendito-cart-ui', state.cart)
   updateCart()
   notify(elements.checkoutFeedback, 'Produto adicionado ao carrinho.')
@@ -527,15 +672,15 @@ function updateCart() {
     } else {
       elements.cartItems.innerHTML = items.map(item => `
         <article class="cart-item">
-          <div class="cart-thumb" style="background-image:url('${item.image}')"></div>
+          <div class="cart-thumb" ${imageStyle(item.image)}></div>
           <div>
-            <h4>${item.name}</h4>
-            <p>${money(item.price)} • ${groupLabel(item.group)}</p>
+            <h4>${escapeHTML(item.name)}</h4>
+            <p>${money(item.price)} • ${escapeHTML(groupLabel(item.group))}</p>
             <div class="cart-controls">
-              <button data-cart="minus" data-id="${item.id}">−</button>
+              <button data-cart="minus" data-id="${safeAttr(item.id)}" aria-label="Diminuir ${safeAttr(item.name)}">−</button>
               <strong>${item.quantity}</strong>
-              <button data-cart="plus" data-id="${item.id}">+</button>
-              <button class="remove-link" data-cart="remove" data-id="${item.id}">remover</button>
+              <button data-cart="plus" data-id="${safeAttr(item.id)}" aria-label="Aumentar ${safeAttr(item.name)}">+</button>
+              <button class="remove-link" data-cart="remove" data-id="${safeAttr(item.id)}">remover</button>
             </div>
           </div>
           <strong>${money(item.total)}</strong>
@@ -588,10 +733,27 @@ async function checkout() {
     return
   }
 
-  const customerName = (document.getElementById('customerNameInput')?.value || '').trim()
+  const checkoutButton = document.getElementById('checkoutButton')
+  const customerNameInput = document.getElementById('customerNameInput')
+  const customerPhoneInput = document.getElementById('customerPhoneInput')
+  const orderNoteInput = document.getElementById('orderNoteInput')
+  const customerName = cleanText(customerNameInput?.value, 80)
+  const customerPhone = normalizePhone(customerPhoneInput?.value)
+  const orderNote = cleanText(orderNoteInput?.value, 280)
 
   if (!customerName) {
     notify(elements.checkoutFeedback, 'Informe o nome da pessoa para registrar o pedido.')
+    return
+  }
+
+  if (!phoneLooksValid(customerPhone)) {
+    notify(elements.checkoutFeedback, 'Informe um telefone válido para o pedido. Ex: (44) 99999-9999.')
+    return
+  }
+
+  const safeItems = getSafeCartItems()
+  if (!safeItems.length) {
+    notify(elements.checkoutFeedback, 'Não foi possível montar os itens do pedido. Atualize a página e tente novamente.')
     return
   }
 
@@ -604,46 +766,67 @@ async function checkout() {
     return
   }
 
-  const { error } = await supabaseClient
-    .from('orders')
-    .insert([{ 
-      customer_name: customerName,
-      payment_method: 'Pagamento no caixa',
-      payment_status: 'Aguardando pagamento no caixa',
-      coupon: state.coupon || null,
-      source: 'site',
-      items_json: cartDetails()
-    }])
+  setLoading(checkoutButton, true, 'Finalizando...')
+
+  const payload = {
+    customer_name: customerName,
+    customer_phone: customerPhone,
+    order_note: orderNote,
+    coupon: state.coupon || null,
+    order_total: cartTotalValue(),
+    items: safeItems
+  }
+
+  const { error, usedRpc } = await createOrderWithSupabase(supabaseClient, payload)
+
+  setLoading(checkoutButton, false)
 
   if (error) {
     console.error(error)
-    notify(elements.checkoutFeedback, 'Erro ao salvar pedido no Supabase. Veja as policies e a chave pública.', 6500)
+    notify(elements.checkoutFeedback, 'Erro ao salvar pedido no Supabase. Confira o SQL de atualização, policies e chave pública.', 7500)
     return
   }
 
   state.cart = []
   save('bendito-cart-ui', state.cart)
-  const customerNameInput = document.getElementById('customerNameInput')
   if (customerNameInput) customerNameInput.value = ''
+  if (customerPhoneInput) customerPhoneInput.value = ''
+  if (orderNoteInput) orderNoteInput.value = ''
   updateCart()
-  notify(elements.checkoutFeedback, 'Pedido enviado com sucesso e salvo no Supabase.')
+  notify(elements.checkoutFeedback, usedRpc ? 'Pedido enviado com segurança e salvo no Supabase.' : 'Pedido enviado. Rode o SQL de segurança para validar preços pelo banco.', 6500)
 }
 
 async function handleReservation(event) {
   event.preventDefault()
 
+  const submitButton = event.target.querySelector('button[type="submit"]')
   const data = {
-    name: document.getElementById('resName')?.value.trim() || '',
-    phone: document.getElementById('resPhone')?.value.trim() || '',
+    name: cleanText(document.getElementById('resName')?.value, 80),
+    phone: normalizePhone(document.getElementById('resPhone')?.value),
     date: document.getElementById('resDate')?.value || '',
     time: document.getElementById('resTime')?.value || '',
     guests: document.getElementById('resGuests')?.value || '',
-    occasion: document.getElementById('resOccasion')?.value || '',
-    notes: document.getElementById('resNotes')?.value.trim() || ''
+    occasion: cleanText(document.getElementById('resOccasion')?.value, 60),
+    notes: cleanText(document.getElementById('resNotes')?.value, 280)
   }
 
   if (!data.name || !data.phone || !data.date || !data.time || !data.guests) {
     notify(elements.reservationFeedback, 'Preencha os campos obrigatórios da reserva.')
+    return
+  }
+
+  if (!phoneLooksValid(data.phone)) {
+    notify(elements.reservationFeedback, 'Informe um telefone válido para a reserva.')
+    return
+  }
+
+  if (!reservationDateIsValid(data.date)) {
+    notify(elements.reservationFeedback, 'Escolha uma data futura entre segunda e sábado.')
+    return
+  }
+
+  if (!reservationTimeIsValid(data.time)) {
+    notify(elements.reservationFeedback, 'Escolha um horário dentro do funcionamento: 09:00 às 12:00 ou 15:00 às 19:00.')
     return
   }
 
@@ -656,7 +839,9 @@ async function handleReservation(event) {
     return
   }
 
+  setLoading(submitButton, true, 'Salvando...')
   const { error } = await supabaseClient.from('reservations').insert([data])
+  setLoading(submitButton, false)
 
   if (error) {
     console.error(error)
@@ -665,7 +850,13 @@ async function handleReservation(event) {
   }
 
   event.target.reset()
+  setMinimumReservationDate()
   notify(elements.reservationFeedback, 'Reserva enviada com sucesso e salva no Supabase.')
+}
+
+function setMinimumReservationDate() {
+  const dateInput = document.getElementById('resDate')
+  if (dateInput) dateInput.min = getTodayISODate()
 }
 
 function handleNewsletter(event) {
@@ -747,7 +938,10 @@ document.addEventListener('click', (event) => {
   if (event.target.matches('#mobileNav')) document.getElementById('nav')?.classList.toggle('open')
 
   const scrollBtn = event.target.closest('[data-scroll]')
-  if (scrollBtn) scrollToSelector(scrollBtn.dataset.scroll)
+  if (scrollBtn) {
+    scrollToSelector(scrollBtn.dataset.scroll)
+    document.getElementById('nav')?.classList.remove('open')
+  }
 
   const galleryItem = event.target.closest('.gallery-item')
   if (galleryItem) {
@@ -786,6 +980,7 @@ document.getElementById('nextTestimonial')?.addEventListener('click', () => chan
 
 if (state.coupon && document.getElementById('couponInput')) document.getElementById('couponInput').value = state.coupon
 
+setMinimumReservationDate()
 renderTabs()
 renderMenu()
 updateCart()

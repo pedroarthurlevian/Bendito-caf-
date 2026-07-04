@@ -1,11 +1,18 @@
-import { supabase, formatMoney, formatDateTime, orderTotal } from './supabase.js'
+import { supabase, formatMoney, formatDateTime, orderTotal, escapeHTML, safeAttr, subscribeToTable } from './supabase.js'
 
 const money = formatMoney
 let allOrders = []
 let cashEntries = []
+let submitting = false
 
 function getOpenOrders() {
   return allOrders.filter(order => (order.payment_status || 'Aguardando pagamento no caixa') === 'Entregue')
+}
+
+function setFeedback(message, isError = false) {
+  const feedback = document.getElementById('cashFeedback')
+  feedback.textContent = message
+  feedback.classList.toggle('is-error', isError)
 }
 
 function renderOrderOptions() {
@@ -19,7 +26,7 @@ function renderOrderOptions() {
   }
 
   select.innerHTML = openOrders.map(order => `
-    <option value="${order.id}">${order.customer_name || 'Sem nome'} • ${money(orderTotal(order))}</option>
+    <option value="${safeAttr(order.id)}">${escapeHTML(order.customer_name || 'Sem nome')} • ${money(orderTotal(order))}</option>
   `).join('')
 
   const preselected = localStorage.getItem('bendito-cash-order-id')
@@ -95,11 +102,11 @@ function renderCashSummary() {
 
   document.getElementById('cashEntriesList').innerHTML = cashEntries.length ? cashEntries.slice(0, 10).map(entry => `
     <div class="list-card">
-      <strong>${entry.customer_name || 'Sem nome'} • ${entry.payment_method}</strong>
-      <span>${formatDateTime(entry.created_at)}</span>
+      <strong>${escapeHTML(entry.customer_name || 'Sem nome')} • ${escapeHTML(entry.payment_method || '-')}</strong>
+      <span>${escapeHTML(formatDateTime(entry.created_at))}</span>
       <span>Total do pedido: ${money(Number(entry.order_total || 0))}</span>
       <span>Valor recebido: ${money(Number(entry.amount_paid || 0))}</span>
-      <small>Troco: ${money(Number(entry.change_given || 0))}${entry.note ? ' • ' + entry.note : ''}</small>
+      <small>Troco: ${money(Number(entry.change_given || 0))}${entry.note ? ' • ' + escapeHTML(entry.note) : ''}</small>
     </div>
   `).join('') : '<div class="list-card"><strong>Nenhum lançamento</strong><span>Ainda não há pagamentos registrados no caixa.</span></div>'
 }
@@ -126,13 +133,14 @@ document.getElementById('amountPaid')?.addEventListener('input', calculateChange
 
 document.getElementById('cashForm')?.addEventListener('submit', async event => {
   event.preventDefault()
+  if (submitting) return
 
   const orderId = document.getElementById('orderSelect').value
   const order = allOrders.find(item => item.id === orderId)
-  const feedback = document.getElementById('cashFeedback')
+  const submitButton = event.target.querySelector('button[type="submit"]')
 
   if (!order) {
-    feedback.textContent = 'Selecione um pedido entregue para registrar o pagamento.'
+    setFeedback('Selecione um pedido entregue para registrar o pagamento.', true)
     return
   }
 
@@ -141,16 +149,44 @@ document.getElementById('cashForm')?.addEventListener('submit', async event => {
   const total = orderTotal(order)
 
   if (amountPaid <= 0) {
-    feedback.textContent = 'Informe o valor recebido no caixa.'
+    setFeedback('Informe o valor recebido no caixa.', true)
     return
   }
 
-  if (paymentMethod === 'Dinheiro' && amountPaid < total) {
-    feedback.textContent = 'O valor em dinheiro não pode ser menor que o total do pedido.'
+  if (amountPaid < total) {
+    setFeedback('O valor recebido não pode ser menor que o total do pedido.', true)
     return
   }
 
   const changeGiven = paymentMethod === 'Dinheiro' ? Math.max(0, amountPaid - total) : 0
+
+  submitting = true
+  submitButton.disabled = true
+  submitButton.textContent = 'Registrando...'
+
+  const { data: existingEntries, error: existingError } = await supabase
+    .from('cash_entries')
+    .select('id')
+    .eq('order_id', orderId)
+    .limit(1)
+
+  if (existingError) {
+    console.error(existingError)
+    setFeedback('Não foi possível conferir se esse pedido já foi pago.', true)
+    submitting = false
+    submitButton.disabled = false
+    submitButton.textContent = 'Confirmar no caixa'
+    return
+  }
+
+  if (existingEntries?.length) {
+    setFeedback('Esse pedido já tem pagamento registrado no caixa.', true)
+    submitting = false
+    submitButton.disabled = false
+    submitButton.textContent = 'Confirmar no caixa'
+    await loadData()
+    return
+  }
 
   const { error: cashError } = await supabase.from('cash_entries').insert([{
     order_id: orderId,
@@ -159,12 +195,15 @@ document.getElementById('cashForm')?.addEventListener('submit', async event => {
     order_total: total,
     amount_paid: amountPaid,
     change_given: changeGiven,
-    note: document.getElementById('cashNote').value.trim()
+    note: document.getElementById('cashNote').value.trim().slice(0, 280)
   }])
 
   if (cashError) {
     console.error(cashError)
-    feedback.textContent = 'Não foi possível registrar o pagamento.'
+    setFeedback('Não foi possível registrar o pagamento.', true)
+    submitting = false
+    submitButton.disabled = false
+    submitButton.textContent = 'Confirmar no caixa'
     return
   }
 
@@ -172,16 +211,21 @@ document.getElementById('cashForm')?.addEventListener('submit', async event => {
     payment_method: paymentMethod,
     payment_status: 'Pago no caixa',
     amount_paid: amountPaid,
-    change_given: changeGiven
+    change_given: changeGiven,
+    status_updated_at: new Date().toISOString()
   }).eq('id', orderId)
+
+  submitting = false
+  submitButton.disabled = false
+  submitButton.textContent = 'Confirmar no caixa'
 
   if (orderError) {
     console.error(orderError)
-    feedback.textContent = 'Pagamento registrado, mas não foi possível atualizar o pedido.'
+    setFeedback('Pagamento registrado, mas não foi possível atualizar o pedido.', true)
     return
   }
 
-  feedback.textContent = 'Pagamento registrado com sucesso no Supabase.'
+  setFeedback('Pagamento registrado com sucesso no Supabase.')
   event.target.reset()
   await loadData()
 })
@@ -191,7 +235,11 @@ document.getElementById('logoutButton')?.addEventListener('click', async () => {
   window.location.href = 'painel-login.html'
 })
 
-loadData().catch(error => {
+loadData().then(() => {
+  ;['orders', 'cash_entries'].forEach(table => {
+    subscribeToTable(table, () => loadData().catch(console.error))
+  })
+}).catch(error => {
   console.error(error)
   alert('Não foi possível carregar o caixa. Confira login, policies e chave pública.')
 })
