@@ -1440,3 +1440,210 @@ button { border: 0; cursor: pointer; }
     font-size: .96rem;
   }
 }
+
+/* Sprint 2 — Campanha temática de futebol / Copa 2026 */
+.copa-campaign {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 15% 18%, rgba(255, 218, 55, .22), transparent 26%),
+    radial-gradient(circle at 84% 20%, rgba(19, 156, 87, .2), transparent 30%),
+    linear-gradient(135deg, #07170f 0%, #0d3d24 44%, #102016 100%);
+  border-top: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.copa-campaign::before,
+.copa-campaign::after {
+  content: "";
+  position: absolute;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  opacity: .22;
+  pointer-events: none;
+}
+
+.copa-campaign::before {
+  left: -130px;
+  bottom: -160px;
+  background:
+    repeating-conic-gradient(from 20deg, rgba(255,255,255,.16) 0 12deg, transparent 12deg 24deg),
+    radial-gradient(circle, transparent 52%, rgba(255,255,255,.14) 53% 56%, transparent 57%);
+}
+
+.copa-campaign::after {
+  right: -110px;
+  top: -170px;
+  background: radial-gradient(circle, rgba(255,214,51,.38), transparent 62%);
+  filter: blur(2px);
+}
+
+.copa-campaign__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: 34px;
+  align-items: center;
+}
+
+.copa-campaign__copy {
+  padding: 34px;
+  border-radius: 34px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 24px 70px rgba(0,0,0,.18);
+  backdrop-filter: blur(12px);
+}
+
+.copa-campaign__copy h2 {
+  color: #fff8df;
+}
+
+.copa-campaign__copy p,
+.campaign-note {
+  color: rgba(255,248,224,.78);
+  line-height: 1.8;
+}
+
+.campaign-note {
+  display: block;
+  margin-top: 16px;
+  font-size: .82rem;
+}
+
+.copa-countdown {
+  margin: 24px 0;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255,214,51,.22), rgba(255,255,255,.08));
+  border: 1px solid rgba(255,214,51,.28);
+  color: #fff7dc;
+  font-weight: 900;
+  letter-spacing: .02em;
+}
+
+.copa-campaign__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.copa-combo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.copa-combo-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 255px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 26px;
+  border-radius: 30px;
+  background:
+    linear-gradient(180deg, rgba(8,20,13,.06), rgba(8,20,13,.88)),
+    url('https://images.unsplash.com/photo-1517747614396-d21a78b850e8?q=80&w=1200&auto=format&fit=crop') center/cover;
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 22px 60px rgba(0,0,0,.2);
+}
+
+.copa-combo-card:nth-child(2) {
+  background:
+    linear-gradient(180deg, rgba(8,20,13,.08), rgba(8,20,13,.88)),
+    url('https://images.unsplash.com/photo-1505575967455-40e256f73376?q=80&w=1200&auto=format&fit=crop') center/cover;
+}
+
+.copa-combo-card:nth-child(3) {
+  background:
+    linear-gradient(180deg, rgba(8,20,13,.08), rgba(8,20,13,.88)),
+    url('https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=1200&auto=format&fit=crop') center/cover;
+}
+
+.copa-combo-card.main {
+  grid-row: span 2;
+  min-height: 528px;
+}
+
+.copa-combo-card::before {
+  content: "⚽";
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,.88);
+  box-shadow: 0 14px 30px rgba(0,0,0,.16);
+  font-size: 1.35rem;
+}
+
+.copa-combo-card span {
+  width: fit-content;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,214,51,.92);
+  color: #152519;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .72rem;
+}
+
+.copa-combo-card h3 {
+  margin: 0;
+  color: #fff8df;
+  font-size: clamp(1.65rem, 3vw, 2.45rem);
+}
+
+.copa-combo-card p {
+  margin: 0;
+  color: rgba(255,248,224,.82);
+  line-height: 1.62;
+}
+
+.copa-combo-card strong {
+  color: #ffd633;
+  font-size: 1.25rem;
+}
+
+@media (max-width: 960px) {
+  .copa-campaign__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .copa-combo-card.main {
+    grid-row: auto;
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 680px) {
+  .copa-campaign__copy {
+    padding: 24px;
+    border-radius: 26px;
+  }
+
+  .copa-combo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .copa-combo-card,
+  .copa-combo-card.main {
+    min-height: 270px;
+  }
+
+  .copa-campaign__actions .primary-btn,
+  .copa-campaign__actions .secondary-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

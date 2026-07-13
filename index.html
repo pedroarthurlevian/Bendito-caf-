@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bendito Café | Experiência artesanal</title>
-  <meta name="description" content="Bendito Café: cafeteria artesanal com identidade rústica premium, cardápio completo, reservas, vitrine interativa e experiência memorável." />
+  <title>Bendito Café | Experiência artesanal e combos da torcida</title>
+  <meta name="description" content="Bendito Café: cafeteria artesanal com cardápio completo, reservas, vitrine interativa, sebo café e combos temáticos da torcida para a Copa 2026." />
+  <meta name="theme-color" content="#0d4f2b" />
+  <meta property="og:title" content="Bendito Café | Combos da Torcida" />
+  <meta property="og:description" content="Cafés, doces, salgados, livros e uma campanha temática de futebol para viver dias de jogo na Bendito Café." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,8 +16,8 @@
 <body>
   <div class="announcement">
     <div class="container announcement__inner">
-      <span>☕ Café especial • ⏰ Funcionamento: Seg a Sáb • 09:00 às 12:00 • 15:00 às 19:00 • 📍 Centro, Paranavaí</span>
-      <button class="ghost-btn" data-scroll="#reservas">Reservar agora</button>
+      <span>⚽ Copa 2026 na Bendito • Combos da torcida • Café, livros e jogo bom • 📍 Centro, Paranavaí</span>
+      <button class="ghost-btn" data-scroll="#copa-2026">Ver campanha</button>
     </div>
   </div>
 
@@ -30,6 +33,7 @@
 
       <nav class="nav" id="nav">
         <a href="#menu">Cardápio</a>
+        <a href="#copa-2026">Copa 2026</a>
         <a href="#experiencia">Experiência</a>
         <a href="#livros">Livros</a>
         <a href="#historia">História</a>
@@ -76,13 +80,14 @@
 
         <div class="hero__actions">
           <button class="primary-btn" data-scroll="#menu">Ver cardápio completo</button>
+          <button class="secondary-btn" data-scroll="#copa-2026">Combos da Torcida</button>
           <button class="secondary-btn" data-scroll="#reservas">Reservar experiência</button>
         </div>
 
         <div class="hero__metrics">
           <article>
-            <strong>50+</strong>
-            <span>sabores para descobrir</span>
+            <strong>60+</strong>
+            <span>sabores e combos para descobrir</span>
           </article>
           <article>
             <strong>8</strong>
@@ -122,6 +127,7 @@
       <span>salgados</span>
       <span>lanches</span>
       <span>livros e leitura</span>
+      <span>combos da torcida</span>
       <span>adicionais</span>
       <span>cafés quentes</span>
       <span>gelados autorais</span>
@@ -132,6 +138,48 @@
   </section>
 
   <main>
+
+    <section class="section copa-campaign" id="copa-2026" aria-labelledby="copaTitle">
+      <div class="container copa-campaign__grid">
+        <article class="copa-campaign__copy">
+          <span class="eyebrow">Campanha especial</span>
+          <h2 id="copaTitle">Bendito em clima de jogo: combos da torcida para a Copa 2026.</h2>
+          <p>
+            Uma campanha temática de futebol, sem uso de marcas oficiais, feita para chamar público em dias de jogo: visual verde, amarelo e café, ofertas fáceis de pedir, reserva de mesa e chamada rápida para o cardápio.
+          </p>
+          <div class="copa-countdown" id="campaignCountdown" aria-live="polite">Campanha ativa durante a temporada da Copa 2026.</div>
+          <div class="copa-campaign__actions">
+            <button class="primary-btn" data-group="combos-torcida" data-scroll="#menu">Ver combos no cardápio</button>
+            <a class="secondary-btn" href="https://wa.me/5544999057757?text=Ol%C3%A1%2C%20quero%20reservar%20uma%20mesa%20para%20assistir%20ao%20jogo%20na%20Bendito%20Caf%C3%A9." target="_blank" rel="noopener noreferrer">Reservar pelo WhatsApp</a>
+          </div>
+          <small class="campaign-note">Tema inspirado em futebol. Não usa logotipo, mascote, troféu ou identidade oficial de organizações esportivas.</small>
+        </article>
+
+        <div class="copa-combo-grid" aria-label="Combos especiais da torcida">
+          <article class="copa-combo-card main">
+            <span>Mais pedido</span>
+            <h3>Combo Torcida Dupla</h3>
+            <p>2 bebidas + 2 lanches/salgados para acompanhar o jogo sem sair do clima.</p>
+            <strong>R$ 64,00</strong>
+            <button class="small-btn" data-featured-add="combo-torcida-dupla">Adicionar combo</button>
+          </article>
+          <article class="copa-combo-card">
+            <span>Individual</span>
+            <h3>Combo 1º Tempo</h3>
+            <p>Café gelado + salgado para chegar antes da bola rolar.</p>
+            <strong>R$ 29,00</strong>
+            <button class="small-btn" data-featured-add="combo-primeiro-tempo">Adicionar</button>
+          </article>
+          <article class="copa-combo-card">
+            <span>Doce</span>
+            <h3>Combo Intervalo Doce</h3>
+            <p>Bebida especial + brownie para adoçar o intervalo.</p>
+            <strong>R$ 35,00</strong>
+            <button class="small-btn" data-featured-add="combo-intervalo-doce">Adicionar</button>
+          </article>
+        </div>
+      </div>
+    </section>
 
     <section class="section section--light" id="momento-leitura">
       <div class="container intro__grid">
@@ -202,6 +250,7 @@
             <span class="eyebrow">Cardápio completo</span>
             <h2>Bebidas, doces, salgados e lanches organizados para facilitar a escolha e abrir o apetite.</h2>
           </div>
+          <button class="outline-btn" data-group="combos-torcida" data-scroll="#menu">Combos da Torcida</button>
           <button class="outline-btn" id="seeCartTop">Ver carrinho</button>
         </div>
 
@@ -522,6 +571,7 @@
       <div>
         <h4>Navegação</h4>
         <a href="#menu">Cardápio</a>
+        <a href="#copa-2026">Copa 2026</a>
         <a href="#sobre">Sobre nós</a>
         <a href="#localizacao">Localização</a>
       </div>
@@ -565,7 +615,7 @@
       </div>
 
       <div class="coupon-row">
-        <input type="text" id="couponInput" placeholder="Cupom: BENDITO10" />
+        <input type="text" id="couponInput" placeholder="Cupom: BENDITO10 ou TORCIDA10" />
         <button id="applyCoupon">Aplicar</button>
       </div>
 

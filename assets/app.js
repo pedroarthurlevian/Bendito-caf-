@@ -22,277 +22,650 @@ async function getSupabaseClient() {
 
 const catalog = [
   {
-    id: 'cappuccino-italiano',
-    name: 'Cappuccino italiano',
-    desc: 'Espuma cremosa, café equilibrado e final clássico para uma pausa com cara de cafeteria italiana.',
-    price: 16,
+    id: 'cafe-coado',
+    name: 'Café Coado',
+    desc: 'Café coado tradicional.',
+    price: 6.00,
     group: 'bebidas-quentes',
     subgroup: 'com-cafe',
-    badge: 'clássico',
+    badge: 'Com café',
+    image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'expresso',
+    name: 'Expresso',
+    desc: 'Uma dose de café expresso.',
+    price: 7.00,
+    group: 'bebidas-quentes',
+    subgroup: 'com-cafe',
+    badge: 'Com café',
+    image: 'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'expresso-duplo',
+    name: 'Expresso Duplo',
+    desc: 'Duas doses de café expresso.',
+    price: 8.50,
+    group: 'bebidas-quentes',
+    subgroup: 'com-cafe',
+    badge: 'Com café',
+    image: 'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'cappuccino-italiano',
+    name: 'Cappuccino Italiano',
+    desc: 'Café expresso com leite.',
+    price: 10.00,
+    group: 'bebidas-quentes',
+    subgroup: 'com-cafe',
+    badge: 'Clássico',
     image: 'assets/img/produtos/cappuccino-italiano.jpeg'
   },
   {
     id: 'cappuccino-cremoso',
-    name: 'Cappuccino cremoso',
-    desc: 'Cappuccino encorpado, textura aveludada e doçura suave para acompanhar um bom livro.',
-    price: 17,
+    name: 'Cappuccino Cremoso',
+    desc: 'Mistura para cappuccino e leite.',
+    price: 12.00,
     group: 'bebidas-quentes',
     subgroup: 'com-cafe',
-    badge: 'cremoso',
+    badge: 'Cremoso',
     image: 'assets/img/produtos/cappuccino-cremoso.jpeg'
   },
   {
-    id: 'expresso-com-chantilly',
-    name: 'Expresso com chantilly',
-    desc: 'Café intenso com uma camada generosa de chantilly para deixar o espresso mais marcante.',
-    price: 14,
+    id: 'cafe-prensa-francesa',
+    name: 'Café na Prensa Francesa',
+    desc: 'Café coado na Prensa Francesa.',
+    price: 11.00,
     group: 'bebidas-quentes',
     subgroup: 'com-cafe',
-    badge: 'especial',
+    badge: 'Com café',
+    image: 'https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'expresso-com-chantilly',
+    name: 'Expresso com Chantilly',
+    desc: 'Café expresso duplo com chantilly.',
+    price: 12.00,
+    group: 'bebidas-quentes',
+    subgroup: 'com-cafe',
+    badge: 'Especial',
     image: 'assets/img/produtos/expresso-com-chantilly.jpeg'
   },
   {
     id: 'affogato',
     name: 'Affogato',
-    desc: 'A combinação elegante de café e creme gelado: sobremesa e café no mesmo momento.',
-    price: 19,
-    group: 'doces',
-    subgroup: 'todos',
-    badge: 'sobremesa',
+    desc: 'Café expresso e sorvete.',
+    price: 13.00,
+    group: 'bebidas-quentes',
+    subgroup: 'com-cafe',
+    badge: 'Sobremesa',
     image: 'assets/img/produtos/affogato.jpeg'
   },
   {
     id: 'mocha',
     name: 'Mocha',
-    desc: 'Café com chocolate, leite cremoso e visual marcante para quem gosta de sabor intenso.',
-    price: 18,
+    desc: 'Café expresso, leite e chocolate.',
+    price: 15.00,
     group: 'bebidas-quentes',
     subgroup: 'com-cafe',
-    badge: 'chocolate',
+    badge: 'Chocolate',
     image: 'assets/img/produtos/mocha.jpeg'
   },
   {
     id: 'super-mocha',
     name: 'Super Mocha',
-    desc: 'Versão mais indulgente do mocha, com camadas cremosas e presença forte de chocolate.',
-    price: 22,
+    desc: 'Café expresso, leite, chocolate e canela.',
+    price: 16.00,
     group: 'bebidas-quentes',
     subgroup: 'com-cafe',
-    badge: 'premium',
+    badge: 'Premium',
     image: 'assets/img/produtos/super-mocha.jpeg'
   },
   {
     id: 'cappuccino-gourmet',
-    name: 'Cappuccino gourmet',
-    desc: 'Cappuccino especial com chantilly, final aromático e aquele toque de cafeteria aconchegante.',
-    price: 21,
+    name: 'Cappuccino Gourmet',
+    desc: 'Mistura para cappuccino, leite, borda de creme de avelã e chantilly.',
+    price: 18.00,
     group: 'bebidas-quentes',
     subgroup: 'com-cafe',
-    badge: 'gourmet',
+    badge: 'Gourmet',
     image: 'assets/img/produtos/cappuccino-gourmet.jpeg'
+  },
+  {
+    id: 'cha-matte-quente',
+    name: 'Chá Matte',
+    desc: 'Sabores: tradicional, limão, pêssego, gengibre, canela e tangerina.',
+    price: 11.00,
+    group: 'bebidas-quentes',
+    subgroup: 'sem-cafe',
+    badge: 'Sem café',
+    image: 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'chocolate-cremoso',
+    name: 'Chocolate Cremoso',
+    desc: 'Mistura para chocolate e leite.',
+    price: 12.00,
+    group: 'bebidas-quentes',
+    subgroup: 'sem-cafe',
+    badge: 'Sem café',
+    image: 'https://images.unsplash.com/photo-1517578239113-b03992dcdd25?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'chocolate-europeu',
+    name: 'Chocolate Europeu',
+    desc: 'Mistura para chocolate e leite. Chocolate mais grosso.',
+    price: 15.00,
+    group: 'bebidas-quentes',
+    subgroup: 'sem-cafe',
+    badge: 'Sem café',
+    image: 'https://images.unsplash.com/photo-1542990253-a781e04c0082?q=80&w=1200&auto=format&fit=crop'
   },
   {
     id: 'chai-latte',
     name: 'Chai Latte',
-    desc: 'Leite cremoso com especiarias, canela e aroma acolhedor para uma pausa diferente.',
-    price: 19,
+    desc: 'Xarope de Chai e leite.',
+    price: 18.00,
     group: 'bebidas-quentes',
     subgroup: 'sem-cafe',
-    badge: 'aromático',
+    badge: 'Sem café',
     image: 'assets/img/produtos/chai-latte.jpeg'
   },
   {
     id: 'cappuccino-gelado',
-    name: 'Cappuccino gelado',
-    desc: 'Café gelado cremoso com caramelo, perfeito para dias quentes e momentos leves.',
-    price: 20,
+    name: 'Cappuccino',
+    desc: 'Mistura para cappuccino, leite e gelo.',
+    price: 13.90,
     group: 'bebidas-geladas',
-    subgroup: 'gelado',
-    badge: 'gelado',
+    subgroup: 'com-cafe',
+    badge: 'Gelado',
     image: 'assets/img/produtos/cappuccino-gelado.jpeg'
   },
   {
     id: 'americano-gelado',
-    name: 'Americano gelado',
-    desc: 'Café gelado com leite em movimento, refrescante, bonito e direto ao ponto.',
-    price: 15,
+    name: 'Americano Gelado',
+    desc: 'Café expresso duplo, água, leite, macadâmia e gelo.',
+    price: 16.00,
     group: 'bebidas-geladas',
-    subgroup: 'gelado',
-    badge: 'refrescante',
+    subgroup: 'com-cafe',
+    badge: 'Gelado',
     image: 'assets/img/produtos/americano-gelado.jpeg'
   },
   {
-    id: 'pink-lemonade',
-    name: 'Pink Lemonade',
-    desc: 'Limonada gelada com toque frutado e visual vibrante para uma opção leve e refrescante.',
-    price: 15,
-    group: 'outras-bebidas',
-    subgroup: 'gelado',
-    badge: 'cítrica',
-    image: 'assets/img/produtos/pink-lemonade.jpeg'
-  },
-  {
-    id: 'chai-latte-gelado',
-    name: 'Chai Latte gelado',
-    desc: 'Versão gelada do chai latte, com especiarias, leite cremoso e perfil aromático.',
-    price: 20,
-    group: 'bebidas-geladas',
-    subgroup: 'gelado',
-    badge: 'aromático',
-    image: 'assets/img/produtos/chai-latte-gelado.jpeg'
-  },
-// Bebidas quentes - com café
-// Bebidas geladas - com café
-// Matcha
-  { id:"mat-01", group:"matcha", subgroup:"quente", name:"Matcha Puro", price:11.00, badge:"Quente", image:"assets/img/produtos/matcha-puro.jpeg", desc:"Matcha servido de forma pura, com sabor marcante e perfil vegetal elegante." },
-  { id:"mat-02", group:"matcha", subgroup:"quente", name:"Latte Matcha", price:15.00, badge:"Quente", image:"assets/img/produtos/latte-matcha.jpeg", desc:"Matcha com leite cremoso e acabamento delicado para uma pausa reconfortante." },
-  { id:"mat-03", group:"matcha", subgroup:"gelado", name:"Latte Matcha com Morango", price:18.00, badge:"Gelado", image:"assets/img/produtos/latte-matcha-com-morango.jpeg", desc:"Combinação refrescante de matcha, leite, morango e gelo com visual marcante." },
-  { id:"mat-04", group:"matcha", subgroup:"gelado", name:"Latte Matcha com Coco e Menta", price:18.00, badge:"Gelado", image:"assets/img/produtos/latte-matcha-com-coco-e-menta.jpeg", desc:"Matcha gelado com coco e menta para uma bebida leve, cremosa e refrescante." },
-  { id:"mat-05", group:"matcha", subgroup:"gelado", name:"Matcha Tropical", price:18.00, badge:"Tropical", image:"assets/img/produtos/matcha-tropical.jpeg", desc:"Matcha gelado com perfil tropical e refrescante, ideal para dias quentes." },
-  { id:"mat-06", group:"matcha", subgroup:"gelado", name:"Latte Matcha com Maracujá", price:18.00, badge:"Gelado", image:"assets/img/produtos/latte-matcha-com-maracuja.jpeg", desc:"Matcha gelado combinado com leite e maracujá para um resultado cremoso e frutado." },
-  { id:"mat-07", group:"matcha", subgroup:"gelado", name:"Matcha Maracujá Spritz", price:19.00, badge:"Spritz", image:"assets/img/produtos/matcha-maracuja-spritz.jpeg", desc:"Bebida refrescante com matcha, maracujá e borbulhas leves para um toque especial." },
-
-  // Outras bebidas
-  { id:"out-01", group:"outras-bebidas", subgroup:"todos", name:"Água", price:5.00, badge:"Clássico", image:"https://images.unsplash.com/photo-1564419439288-b2d15a86f8ff?q=80&w=1200&auto=format&fit=crop", desc:"Sem gás ou com gás." },
-  { id:"out-02", group:"outras-bebidas", subgroup:"todos", name:"Sucos de Polpa", price:9.00, badge:"Consultar", image:"https://images.unsplash.com/photo-1622597467836-f3285f2131b8?q=80&w=1200&auto=format&fit=crop", desc:"Consultar sabores do dia." },
-  { id:"out-03", group:"outras-bebidas", subgroup:"todos", name:"Coca-Cola 200ml", price:5.00, badge:"Gelado", image:"https://images.unsplash.com/photo-1581636625402-29b2a704ef13?q=80&w=1200&auto=format&fit=crop", desc:"Refrigerante em porção de 200ml." },
-
-  // Adicionais
-  { id:"add-01", group:"adicionais", subgroup:"todos", name:"Leite sem Lactose", price:1.50, badge:"Adicional", image:"https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=1200&auto=format&fit=crop", desc:"Adicional para adaptar a bebida." },
-  { id:"add-02", group:"adicionais", subgroup:"todos", name:"Ovomaltine", price:3.00, badge:"Extra", image:"assets/img/produtos/ovomaltine.jpeg", desc:"Adicional crocante para enriquecer bebidas e sobremesas." },
-  { id:"add-03", group:"adicionais", subgroup:"todos", name:"Chantilly", price:3.00, badge:"Extra", image:"assets/img/produtos/chantilly.jpeg", desc:"Cobertura adicional." },
-  { id:"add-04", group:"adicionais", subgroup:"todos", name:"Leite Vegetal", price:4.00, badge:"Adicional", image:"https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=1200&auto=format&fit=crop", desc:"Opção vegetal para bebidas." },
-  { id:"add-05", group:"adicionais", subgroup:"todos", name:"Borda", price:5.00, badge:"Doce", image:"assets/img/produtos/borda.jpeg", desc:"Doce de leite ou creme de avelã." },
-
-  // Doces
-  { id:"doc-01", group:"doces", subgroup:"todos", name:"Bendito Bolinho", price:13.00, badge:"Vitrine", image:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=1200&auto=format&fit=crop", desc:"Mini bolo com cobertura de ganache de chocolate. Consultar sabores." },
-  { id:"doc-02", group:"doces", subgroup:"todos", name:"Pão Casadinho", price:13.00, badge:"Doce", image:"https://images.unsplash.com/photo-1519864600265-abb23847ef2c?q=80&w=1200&auto=format&fit=crop", desc:"2 fatias de pão francês: uma com queijo e requeijão e a outra doce com creme de avelã, doce de leite ou goiabada." },
-  { id:"doc-03", group:"doces", subgroup:"todos", name:"Pão de Minas", price:18.00, badge:"Especial", image:"https://images.unsplash.com/photo-1483695028939-5bb13f8648b0?q=80&w=1200&auto=format&fit=crop", desc:"2 fatias de pão francês, recheado com cream cheese, doce de leite e queijo de minas." },
-  { id:"doc-04", group:"doces", subgroup:"todos", name:"Croissant com Creme de Avelã", price:18.00, badge:"Queridinho", image:"https://images.unsplash.com/photo-1555507036-ab794f4afe5a?q=80&w=1200&auto=format&fit=crop", desc:"Croissant de chocolate coberto com creme de avelã." },
-  { id:"doc-05", group:"doces", subgroup:"todos", name:"Brownie", price:10.00, badge:"Clássico", image:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=1200&auto=format&fit=crop", desc:"Brownie tradicional." },
-  { id:"doc-06", group:"doces", subgroup:"todos", name:"Brownie com Sorvete", price:16.00, badge:"Destaque", image:"https://images.unsplash.com/photo-1464306076886-da185f6a9d05?q=80&w=1200&auto=format&fit=crop", desc:"Brownie tradicional com bola de sorvete de creme." },
-
-  // Salgados
-  { id:"sal-01", group:"salgados", subgroup:"todos", name:"Waffle", price:7.00, badge:"Massa pão de queijo", image:"https://images.unsplash.com/photo-1506084868230-bb9d95c24759?q=80&w=1200&auto=format&fit=crop", desc:"Waffle de massa de pão de queijo." },
-  { id:"sal-02", group:"salgados", subgroup:"todos", name:"Waffle Recheado", price:12.00, badge:"Sabores", image:"https://images.unsplash.com/photo-1506084868230-bb9d95c24759?q=80&w=1200&auto=format&fit=crop", desc:"Waffle de massa de pão de queijo. Sabores: presunto e queijo, creme de avelã, doce de leite e mel." },
-  { id:"sal-03", group:"salgados", subgroup:"todos", name:"4 Mini Empadas", price:10.00, badge:"Consultar", image:"https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=1200&auto=format&fit=crop", desc:"Consultar sabores do dia." },
-  { id:"sal-04", group:"salgados", subgroup:"todos", name:"Assados", price:12.00, badge:"Do dia", image:"https://images.unsplash.com/photo-1549903072-7e6e0bedb7fb?q=80&w=1200&auto=format&fit=crop", desc:"Croissant e outros, consultar sabores do dia." },
-  { id:"sal-05", group:"salgados", subgroup:"todos", name:"Empada", price:13.00, badge:"Do dia", image:"https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?q=80&w=1200&auto=format&fit=crop", desc:"Consultar sabores do dia." },
-
-  // Lanches
-  { id:"lan-01", group:"lanches", subgroup:"na-chapa", name:"Pão com Manteiga", price:7.00, badge:"Na chapa", image:"https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200&auto=format&fit=crop", desc:"Fatia de pão caseiro com manteiga." },
-  { id:"lan-02", group:"lanches", subgroup:"na-chapa", name:"Pão com Manteiga, Mel e Orégano", price:11.00, badge:"Na chapa", image:"https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200&auto=format&fit=crop", desc:"Fatia de pão caseiro com manteiga, mel e orégano." },
-  { id:"lan-03", group:"lanches", subgroup:"na-chapa", name:"Pão com Ovo", price:13.00, badge:"Café da manhã", image:"https://images.unsplash.com/photo-1525351484163-7529414344d8?q=80&w=1200&auto=format&fit=crop", desc:"Pão francês, ovo e requeijão." },
-  { id:"lan-04", group:"lanches", subgroup:"na-chapa", name:"Misto Quente", price:13.00, badge:"Clássico", image:"https://images.unsplash.com/photo-1528735602780-2552fd46c7af?q=80&w=1200&auto=format&fit=crop", desc:"Pão francês, requeijão, presunto e muçarela." },
-  { id:"lan-05", group:"lanches", subgroup:"na-chapa", name:"Bauru", price:14.00, badge:"Querido", image:"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?q=80&w=1200&auto=format&fit=crop", desc:"Pão francês, requeijão, presunto, muçarela, tomate e orégano." },
-  { id:"lan-06", group:"lanches", subgroup:"na-chapa", name:"Bauru com Ovo", price:17.00, badge:"Completo", image:"https://images.unsplash.com/photo-1553909489-cd47e0ef937f?q=80&w=1200&auto=format&fit=crop", desc:"Pão francês, requeijão, presunto, muçarela, ovo, tomate e orégano." },
-  { id:"lan-07", group:"lanches", subgroup:"na-chapa", name:"Sanduiche Natural", price:20.00, badge:"Leve", image:"https://images.unsplash.com/photo-1528736235302-52922df5c122?q=80&w=1200&auto=format&fit=crop", desc:"Pão integral, patê de frango, alface e tomate." },
-  { id:"lan-08", group:"lanches", subgroup:"na-chapa", name:"Omelete", price:21.00, badge:"Forte", image:"https://images.unsplash.com/photo-1510693206972-df098062cb71?q=80&w=1200&auto=format&fit=crop", desc:"Ovos, tomate, presunto, muçarela e orégano." },
-  { id:"lan-09", group:"lanches", subgroup:"na-chapa", name:"Bacon & Ovo", price:22.00, badge:"Destaque", image:"https://images.unsplash.com/photo-1525351326368-efbb5cb6814d?q=80&w=1200&auto=format&fit=crop", desc:"Fatia de pão caseiro, requeijão, ovo mexido, bacon e muçarela." },
-  {
     id: 'frapuccino-menta-e-chocolate',
-    name: 'Frapuccino Menta e Chocolate',
-    desc: 'Bebida gelada com chocolate, toque de menta e apresentação marcante para refrescar com sabor.',
-    price: 24,
+    name: 'Frappuccino Menta e Chocolate',
+    desc: 'Café expresso, leite, menta, calda de chocolate e gelo.',
+    price: 17.00,
     group: 'bebidas-geladas',
-    subgroup: 'gelado',
-    badge: 'menta',
+    subgroup: 'com-cafe',
+    badge: 'Gelado',
     image: 'assets/img/produtos/frapuccino-menta-e-chocolate.jpeg'
   },
   {
     id: 'chococcino',
     name: 'Chococcino',
-    desc: 'Mistura cremosa de café com chocolate, gelada e encorpada para quem gosta de sabores intensos.',
-    price: 20,
+    desc: 'Mistura para cappuccino e chocolate, ovomaltine, leite e gelo.',
+    price: 18.00,
     group: 'bebidas-geladas',
-    subgroup: 'gelado',
-    badge: 'chocolate',
+    subgroup: 'com-cafe',
+    badge: 'Chocolate',
     image: 'assets/img/produtos/chococcino.jpeg'
   },
   {
     id: 'expresso-com-tonica',
-    name: 'Expresso com tônica',
-    desc: 'Espresso servido com tônica e gelo, combinação refrescante e surpreendente para dias quentes.',
-    price: 16,
+    name: 'Expresso com Tônica',
+    desc: 'Café expresso duplo, água tônica, xarope e gelo. Sabores: gengibre, pêssego, avelã, caramelo salgado e baunilha.',
+    price: 18.00,
     group: 'bebidas-geladas',
-    subgroup: 'gelado',
-    badge: 'refrescante',
+    subgroup: 'com-cafe',
+    badge: 'Refrescante',
     image: 'assets/img/produtos/expresso-com-tonica.jpeg'
   },
   {
     id: 'frapuccino-super-mocha',
-    name: 'Frapuccino Super Mocha',
-    desc: 'Versão gelada e cremosa do mocha, com bastante chocolate e final indulgente.',
-    price: 24,
+    name: 'Frappuccino Super Mocha',
+    desc: 'Café expresso, leite, macadâmia, canela, calda de chocolate, chantilly e gelo.',
+    price: 18.00,
     group: 'bebidas-geladas',
-    subgroup: 'gelado',
-    badge: 'premium',
+    subgroup: 'com-cafe',
+    badge: 'Mocha',
     image: 'assets/img/produtos/frapuccino-super-mocha.jpeg'
   },
   {
     id: 'cappuccino-frozen',
     name: 'Cappuccino Frozen',
-    desc: 'Cappuccino batido e bem cremoso, servido gelado para unir café e refrescância.',
-    price: 21,
+    desc: 'Mistura para cappuccino, leite, sorvete de creme, caramelo salgado e gelo.',
+    price: 22.00,
     group: 'bebidas-geladas',
-    subgroup: 'gelado',
-    badge: 'frozen',
+    subgroup: 'com-cafe',
+    badge: 'Frozen',
     image: 'assets/img/produtos/cappuccino-frozen.jpeg'
   },
   {
     id: 'cha-matte-gelado',
-    name: 'Chá Matte Gelado',
-    desc: 'Chá matte servido bem gelado, leve e ideal para acompanhar um lanche da tarde.',
-    price: 14,
-    group: 'outras-bebidas',
-    subgroup: 'gelado',
-    badge: 'chá',
+    name: 'Chá Matte',
+    desc: 'Sabores: tradicional, limão, pêssego, gengibre, canela e tangerina.',
+    price: 12.00,
+    group: 'bebidas-geladas',
+    subgroup: 'sem-cafe',
+    badge: 'Sem café',
     image: 'assets/img/produtos/cha-matte-gelado.jpeg'
   },
   {
     id: 'soda-italiana',
     name: 'Soda Italiana',
-    desc: 'Bebida gaseificada, leve e colorida, perfeita para quem quer algo sem café e bem refrescante.',
-    price: 16,
-    group: 'outras-bebidas',
-    subgroup: 'gelado',
-    badge: 'refrescante',
+    desc: 'Água com gás, xarope e gelo. Sabores: maçã verde, gengibre, menta, cranberry, coco, tangerina, grenadine, morango e limão.',
+    price: 13.00,
+    group: 'bebidas-geladas',
+    subgroup: 'sem-cafe',
+    badge: 'Sem café',
     image: 'assets/img/produtos/soda-italiana.jpeg'
   },
   {
-    id: 'guarana-da-amazonia',
-    name: 'Guaraná da Amazônia',
-    desc: 'Bebida cremosa e gelada com sabor marcante de guaraná, ótima para uma pausa diferente.',
-    price: 18,
-    group: 'outras-bebidas',
-    subgroup: 'gelado',
-    badge: 'especial',
-    image: 'assets/img/produtos/guarana-da-amazonia.jpeg'
-  },
-  {
     id: 'chocolate-gelado',
-    name: 'Chocolate gelado',
-    desc: 'Chocolate gelado cremoso, com calda marcante e visual que chama atenção logo de cara.',
-    price: 19,
+    name: 'Chocolate',
+    desc: 'Mistura para chocolate, leite e gelo.',
+    price: 13.90,
     group: 'bebidas-geladas',
-    subgroup: 'gelado',
-    badge: 'cremoso',
+    subgroup: 'sem-cafe',
+    badge: 'Sem café',
     image: 'assets/img/produtos/chocolate-gelado.jpeg'
   },
   {
-    id: 'golden-lemonade',
-    name: 'Golden Lemonade',
-    desc: 'Limonada especial servida com gelo e toque dourado para uma opção cítrica e refrescante.',
-    price: 15,
-    group: 'outras-bebidas',
+    id: 'pink-lemonade',
+    name: 'Pink Limonade',
+    desc: 'Purê de morango, suco de limão taiti e gelo.',
+    price: 15.00,
+    group: 'bebidas-geladas',
+    subgroup: 'sem-cafe',
+    badge: 'Sem café',
+    image: 'assets/img/produtos/pink-lemonade.jpeg'
+  },
+  {
+    id: 'chai-latte-gelado',
+    name: 'Chai Latte',
+    desc: 'Xarope de Chai, leite e gelo.',
+    price: 18.00,
+    group: 'bebidas-geladas',
+    subgroup: 'sem-cafe',
+    badge: 'Sem café',
+    image: 'assets/img/produtos/chai-latte-gelado.jpeg'
+  },
+  {
+    id: 'mat-01',
+    name: 'Matcha Puro',
+    desc: 'Matcha e água.',
+    price: 11.00,
+    group: 'matcha',
+    subgroup: 'quente',
+    badge: 'Quente',
+    image: 'assets/img/produtos/matcha-puro.jpeg'
+  },
+  {
+    id: 'mat-02',
+    name: 'Latte Matcha',
+    desc: 'Matcha, leite e coco.',
+    price: 15.00,
+    group: 'matcha',
+    subgroup: 'quente',
+    badge: 'Quente',
+    image: 'assets/img/produtos/latte-matcha.jpeg'
+  },
+  {
+    id: 'mat-03',
+    name: 'Latte Matcha com Morango',
+    desc: 'Matcha, leite, purê de morango e gelo.',
+    price: 18.00,
+    group: 'matcha',
     subgroup: 'gelado',
-    badge: 'cítrica',
-    image: 'assets/img/produtos/golden-lemonade.jpeg'
+    badge: 'Gelado',
+    image: 'assets/img/produtos/latte-matcha-com-morango.jpeg'
+  },
+  {
+    id: 'mat-04',
+    name: 'Latte Matcha com Coco e Menta',
+    desc: 'Matcha, leite, coco, menta e gelo.',
+    price: 18.00,
+    group: 'matcha',
+    subgroup: 'gelado',
+    badge: 'Gelado',
+    image: 'assets/img/produtos/latte-matcha-com-coco-e-menta.jpeg'
+  },
+  {
+    id: 'mat-05',
+    name: 'Matcha Tropical',
+    desc: 'Matcha, água com gás, gengibre, pêssego e gelo.',
+    price: 18.00,
+    group: 'matcha',
+    subgroup: 'gelado',
+    badge: 'Tropical',
+    image: 'assets/img/produtos/matcha-tropical.jpeg'
+  },
+  {
+    id: 'out-01',
+    name: 'Água',
+    desc: 'Sem gás ou com gás.',
+    price: 5.00,
+    group: 'outras-bebidas',
+    subgroup: 'todos',
+    badge: 'Clássico',
+    image: 'https://images.unsplash.com/photo-1564419439288-b2d15a86f8ff?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'out-02',
+    name: 'Sucos de Polpa',
+    desc: 'Consultar sabores do dia.',
+    price: 9.00,
+    group: 'outras-bebidas',
+    subgroup: 'todos',
+    badge: 'Consultar',
+    image: 'https://images.unsplash.com/photo-1622597467836-f3285f2131b8?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'out-03',
+    name: 'Coca-Cola 200ml',
+    desc: 'Gelado.',
+    price: 5.00,
+    group: 'outras-bebidas',
+    subgroup: 'todos',
+    badge: 'Gelado',
+    image: 'https://images.unsplash.com/photo-1581636625402-29b2a704ef13?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'add-01',
+    name: 'Leite sem Lactose',
+    desc: 'Adicional para adaptar a bebida.',
+    price: 1.50,
+    group: 'adicionais',
+    subgroup: 'todos',
+    badge: 'Adicional',
+    image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'add-02',
+    name: 'Ovomaltine',
+    desc: 'Adicional crocante para enriquecer bebidas e sobremesas.',
+    price: 3.00,
+    group: 'adicionais',
+    subgroup: 'todos',
+    badge: 'Extra',
+    image: 'assets/img/produtos/ovomaltine.jpeg'
+  },
+  {
+    id: 'add-03',
+    name: 'Chantilly',
+    desc: 'Cobertura adicional.',
+    price: 3.00,
+    group: 'adicionais',
+    subgroup: 'todos',
+    badge: 'Extra',
+    image: 'assets/img/produtos/chantilly.jpeg'
+  },
+  {
+    id: 'add-04',
+    name: 'Leite Vegetal',
+    desc: 'Opção vegetal para bebidas.',
+    price: 4.00,
+    group: 'adicionais',
+    subgroup: 'todos',
+    badge: 'Adicional',
+    image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'add-05',
+    name: 'Borda',
+    desc: 'Doce de leite ou creme de avelã.',
+    price: 5.00,
+    group: 'adicionais',
+    subgroup: 'todos',
+    badge: 'Doce',
+    image: 'assets/img/produtos/borda.jpeg'
+  },
+  {
+    id: 'doc-01',
+    name: 'Bendito Bolinho',
+    desc: 'Mini bolo com cobertura de ganache de chocolate. Consultar sabores.',
+    price: 13.00,
+    group: 'doces',
+    subgroup: 'todos',
+    badge: 'Vitrine',
+    image: 'assets/img/produtos/bendito-bolinho.png'
+  },
+  {
+    id: 'doc-02',
+    name: 'Pão Casadinho',
+    desc: '2 fatias de pão francês: uma fatia de queijo e requeijão e a outra fatia doce com creme de avelã, doce de leite ou goiabada.',
+    price: 13.00,
+    group: 'doces',
+    subgroup: 'todos',
+    badge: 'Doce',
+    image: 'assets/img/produtos/pao-casadinho.png'
+  },
+  {
+    id: 'doc-03',
+    name: 'Pão de Minas',
+    desc: '2 fatias de pão francês, recheado com cream cheese, doce de leite e queijo de minas.',
+    price: 18.00,
+    group: 'doces',
+    subgroup: 'todos',
+    badge: 'Especial',
+    image: 'assets/img/produtos/pao-de-minas.png'
+  },
+  {
+    id: 'doc-04',
+    name: 'Croissant com Creme de Avelã',
+    desc: 'Croissant de chocolate coberto com creme de avelã.',
+    price: 18.00,
+    group: 'doces',
+    subgroup: 'todos',
+    badge: 'Queridinho',
+    image: 'assets/img/produtos/croissant-de-avela.png'
+  },
+  {
+    id: 'doc-05',
+    name: 'Brownie',
+    desc: 'Brownie tradicional.',
+    price: 10.00,
+    group: 'doces',
+    subgroup: 'todos',
+    badge: 'Clássico',
+    image: 'assets/img/produtos/brownie.png'
+  },
+  {
+    id: 'doc-06',
+    name: 'Brownie com Sorvete',
+    desc: 'Brownie tradicional com bola de sorvete de creme.',
+    price: 16.00,
+    group: 'doces',
+    subgroup: 'todos',
+    badge: 'Destaque',
+    image: 'assets/img/produtos/brownie-com-sorvete.png'
+  },
+  {
+    id: 'sal-01',
+    name: 'Waffle',
+    desc: 'Waffle de massa de pão de queijo.',
+    price: 7.00,
+    group: 'salgados',
+    subgroup: 'todos',
+    badge: 'Massa pão de queijo',
+    image: 'assets/img/produtos/waffle.png'
+  },
+  {
+    id: 'sal-02',
+    name: 'Waffle Recheado',
+    desc: 'Waffle de massa de pão de queijo. Sabores: presunto e queijo, creme de avelã, doce de leite e mel.',
+    price: 12.00,
+    group: 'salgados',
+    subgroup: 'todos',
+    badge: 'Sabores',
+    image: 'assets/img/produtos/waffle-recheado.png'
+  },
+  {
+    id: 'sal-03',
+    name: '4 Mini Empadas',
+    desc: 'Consultar sabores do dia.',
+    price: 10.00,
+    group: 'salgados',
+    subgroup: 'todos',
+    badge: 'Consultar',
+    image: 'assets/img/produtos/mini-empadas.png'
+  },
+  {
+    id: 'sal-04',
+    name: 'Assados',
+    desc: 'Croissant e outros. Consultar sabores do dia.',
+    price: 12.00,
+    group: 'salgados',
+    subgroup: 'todos',
+    badge: 'Do dia',
+    image: 'assets/img/produtos/croissant.png'
+  },
+  {
+    id: 'sal-05',
+    name: 'Empada',
+    desc: 'Consultar sabores do dia.',
+    price: 13.00,
+    group: 'salgados',
+    subgroup: 'todos',
+    badge: 'Do dia',
+    image: 'assets/img/produtos/empada-tradicional.png'
+  },
+  {
+    id: 'lan-01',
+    name: 'Pão com Manteiga',
+    desc: 'Fatia de pão caseiro com manteiga.',
+    price: 7.00,
+    group: 'lanches',
+    subgroup: 'na-chapa',
+    badge: 'Na chapa',
+    image: 'assets/img/produtos/pao-com-manteiga.png'
+  },
+  {
+    id: 'lan-02',
+    name: 'Pão com Manteiga, Mel e Orégano',
+    desc: 'Fatia de pão caseiro com manteiga, mel e orégano.',
+    price: 11.00,
+    group: 'lanches',
+    subgroup: 'na-chapa',
+    badge: 'Na chapa',
+    image: 'assets/img/produtos/pao-com-manteiga-mel-e-oregano.png'
+  },
+  {
+    id: 'lan-03',
+    name: 'Pão com Ovo',
+    desc: 'Pão francês, ovo e requeijão.',
+    price: 13.00,
+    group: 'lanches',
+    subgroup: 'na-chapa',
+    badge: 'Café da manhã',
+    image: 'assets/img/produtos/pao-com-ovo.png'
+  },
+  {
+    id: 'lan-04',
+    name: 'Misto Quente',
+    desc: 'Pão francês, requeijão, presunto e muçarela.',
+    price: 13.00,
+    group: 'lanches',
+    subgroup: 'na-chapa',
+    badge: 'Clássico',
+    image: 'assets/img/produtos/misto-quente.png'
+  },
+  {
+    id: 'lan-05',
+    name: 'Bauru',
+    desc: 'Pão francês, requeijão, presunto, muçarela, tomate e orégano.',
+    price: 14.00,
+    group: 'lanches',
+    subgroup: 'na-chapa',
+    badge: 'Querido',
+    image: 'assets/img/produtos/bauru.png'
+  },
+  {
+    id: 'lan-06',
+    name: 'Bauru com Ovo',
+    desc: 'Pão francês, requeijão, presunto, muçarela, ovo, tomate e orégano.',
+    price: 17.00,
+    group: 'lanches',
+    subgroup: 'na-chapa',
+    badge: 'Completo',
+    image: 'assets/img/produtos/bauru-com-ovo.png'
+  },
+  {
+    id: 'lan-07',
+    name: 'Sanduiche Natural',
+    desc: 'Pão integral, patê de frango, alface e tomate.',
+    price: 20.00,
+    group: 'lanches',
+    subgroup: 'na-chapa',
+    badge: 'Leve',
+    image: 'https://images.unsplash.com/photo-1528736235302-52922df5c122?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'lan-08',
+    name: 'Omelete',
+    desc: 'Ovos, tomate, presunto, muçarela e orégano.',
+    price: 21.00,
+    group: 'lanches',
+    subgroup: 'na-chapa',
+    badge: 'Forte',
+    image: 'https://images.unsplash.com/photo-1510693206972-df098062cb71?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'lan-09',
+    name: 'Bacon & Ovo',
+    desc: 'Fatia de pão caseiro, requeijão, ovo mexido, bacon e muçarela.',
+    price: 22.00,
+    group: 'lanches',
+    subgroup: 'na-chapa',
+    badge: 'Destaque',
+    image: 'assets/img/produtos/bacon-e-ovo.png'
+  },
+  {
+    id: 'combo-primeiro-tempo',
+    name: 'Combo 1º Tempo',
+    desc: 'Cappuccino gelado + Pão com Ovo para entrar no clima do jogo.',
+    price: 29.00,
+    group: 'combos-torcida',
+    subgroup: 'copa2026',
+    badge: 'Copa 2026',
+    image: 'https://images.unsplash.com/photo-1505575967455-40e256f73376?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'combo-torcida-dupla',
+    name: 'Combo Torcida Dupla',
+    desc: '2 bebidas geladas + 2 salgados para acompanhar o jogo com companhia.',
+    price: 64.00,
+    group: 'combos-torcida',
+    subgroup: 'copa2026',
+    badge: 'Mais pedido',
+    image: 'https://images.unsplash.com/photo-1517747614396-d21a78b850e8?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'combo-intervalo-doce',
+    name: 'Combo Intervalo Doce',
+    desc: 'Brownie com Sorvete + bebida gelada para adoçar o intervalo.',
+    price: 35.00,
+    group: 'combos-torcida',
+    subgroup: 'copa2026',
+    badge: 'Doce',
+    image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=1200&auto=format&fit=crop'
+  },
+  {
+    id: 'combo-mesa-da-torcida',
+    name: 'Combo Mesa da Torcida',
+    desc: 'Porção maior para mesa: bebidas, salgados e doce para dividir.',
+    price: 119.00,
+    group: 'combos-torcida',
+    subgroup: 'copa2026',
+    badge: 'Grupo',
+    image: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=1200&auto=format&fit=crop'
   }
-];
+]
 
 const GROUPS = [
   { key:"all", label:"Tudo" },
+  { key:"combos-torcida", label:"Combos da Torcida" },
   { key:"bebidas-quentes", label:"Bebidas Quentes" },
   { key:"bebidas-geladas", label:"Bebidas Geladas" },
   { key:"matcha", label:"Matcha" },
@@ -313,7 +686,13 @@ const SUBGROUP_LABELS = {
   'cafes-especiais': 'Cafés especiais',
   'bebidas-especiais': 'Bebidas especiais',
   'cafes-gelados': 'Cafés gelados',
-  'sobremesas': 'Sobremesas'
+  'sobremesas': 'Sobremesas',
+  'copa2026': 'Copa 2026'
+};
+
+const VALID_COUPONS = {
+  BENDITO10: 0.10,
+  TORCIDA10: 0.10
 };
 
 
@@ -365,6 +744,7 @@ const elements = {
   discountValue: document.getElementById('discountValue'),
   totalValue: document.getElementById('totalValue'),
   checkoutFeedback: document.getElementById('checkoutFeedback'),
+  campaignCountdown: document.getElementById('campaignCountdown'),
   reservationFeedback: document.getElementById('reservationFeedback'),
   testimonialText: document.getElementById('testimonialText'),
   testimonialAuthor: document.getElementById('testimonialAuthor'),
@@ -474,7 +854,8 @@ function getSafeCartItems() {
 
 function cartTotalValue() {
   const subtotal = cartDetails().reduce((acc, item) => acc + item.total, 0)
-  const discount = state.coupon === 'BENDITO10' ? subtotal * 0.1 : 0
+  const discountRate = VALID_COUPONS[state.coupon] || 0
+  const discount = subtotal * discountRate
   return Number((subtotal - discount).toFixed(2))
 }
 
@@ -690,7 +1071,8 @@ function updateCart() {
   }
 
   const subtotal = items.reduce((acc, item) => acc + item.total, 0)
-  const discount = state.coupon === 'BENDITO10' ? subtotal * 0.1 : 0
+  const discountRate = VALID_COUPONS[state.coupon] || 0
+  const discount = subtotal * discountRate
   const total = subtotal - discount
 
   if (elements.subtotalValue) elements.subtotalValue.textContent = money(subtotal)
@@ -721,10 +1103,10 @@ function notify(target, message, timeout = 2800) {
 
 function applyCoupon() {
   const code = document.getElementById('couponInput')?.value.trim().toUpperCase()
-  state.coupon = code === 'BENDITO10' ? code : ''
+  state.coupon = VALID_COUPONS[code] ? code : ''
   save('bendito-coupon-ui', state.coupon)
   updateCart()
-  notify(elements.checkoutFeedback, state.coupon ? 'Cupom aplicado: 10% de desconto.' : 'Cupom inválido. Tente BENDITO10.')
+  notify(elements.checkoutFeedback, state.coupon ? `Cupom aplicado: ${state.coupon}.` : 'Cupom inválido. Tente BENDITO10 ou TORCIDA10.')
 }
 
 async function checkout() {
@@ -859,6 +1241,25 @@ function setMinimumReservationDate() {
   if (dateInput) dateInput.min = getTodayISODate()
 }
 
+
+function updateCampaignCountdown() {
+  if (!elements.campaignCountdown) return
+  const finalDate = new Date('2026-07-19T16:00:00-03:00')
+  const now = new Date()
+  const diff = finalDate.getTime() - now.getTime()
+
+  if (diff <= 0) {
+    elements.campaignCountdown.textContent = 'Campanha temática encerrada. Você pode reativar os combos quando quiser.'
+    return
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24)
+  elements.campaignCountdown.textContent = days > 0
+    ? `Faltam ${days} dia(s) e ${hours}h para a final. Aproveite os combos da torcida.`
+    : `Faltam ${hours}h para a final. Garanta seu combo da torcida.`
+}
+
 function handleNewsletter(event) {
   event.preventDefault()
   event.target.reset()
@@ -985,4 +1386,6 @@ renderTabs()
 renderMenu()
 updateCart()
 renderTestimonial()
+updateCampaignCountdown()
+setInterval(updateCampaignCountdown, 60000)
 setInterval(() => changeTestimonial(1), 6500)
