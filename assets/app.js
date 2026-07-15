@@ -149,7 +149,7 @@ const catalog = [
     group: 'bebidas-quentes',
     subgroup: 'sem-cafe',
     badge: 'Sem café',
-    image: 'https://images.unsplash.com/photo-1517578239113-b03992dcdd25?q=80&w=1200&auto=format&fit=crop'
+    image: 'assets/img/produtos/chocolate-cremoso.jpeg'
   },
   {
     id: 'chocolate-europeu',
@@ -159,7 +159,7 @@ const catalog = [
     group: 'bebidas-quentes',
     subgroup: 'sem-cafe',
     badge: 'Sem café',
-    image: 'https://images.unsplash.com/photo-1542990253-a781e04c0082?q=80&w=1200&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1517578239113-b03992dcdd25?q=80&w=1200&auto=format&fit=crop'
   },
   {
     id: 'chai-latte',
@@ -592,16 +592,6 @@ const catalog = [
     image: 'assets/img/produtos/bauru-com-ovo.png'
   },
   {
-    id: 'lan-07',
-    name: 'Sanduiche Natural',
-    desc: 'Pão integral, patê de frango, alface e tomate.',
-    price: 20.00,
-    group: 'lanches',
-    subgroup: 'na-chapa',
-    badge: 'Leve',
-    image: 'https://images.unsplash.com/photo-1528736235302-52922df5c122?q=80&w=1200&auto=format&fit=crop'
-  },
-  {
     id: 'lan-08',
     name: 'Omelete',
     desc: 'Ovos, tomate, presunto, muçarela e orégano.',
@@ -621,51 +611,10 @@ const catalog = [
     badge: 'Destaque',
     image: 'assets/img/produtos/bacon-e-ovo.png'
   },
-  {
-    id: 'combo-primeiro-tempo',
-    name: 'Combo 1º Tempo',
-    desc: 'Cappuccino gelado + Pão com Ovo para entrar no clima do jogo.',
-    price: 29.00,
-    group: 'combos-torcida',
-    subgroup: 'copa2026',
-    badge: 'Copa 2026',
-    image: 'https://images.unsplash.com/photo-1505575967455-40e256f73376?q=80&w=1200&auto=format&fit=crop'
-  },
-  {
-    id: 'combo-torcida-dupla',
-    name: 'Combo Torcida Dupla',
-    desc: '2 bebidas geladas + 2 salgados para acompanhar o jogo com companhia.',
-    price: 64.00,
-    group: 'combos-torcida',
-    subgroup: 'copa2026',
-    badge: 'Mais pedido',
-    image: 'https://images.unsplash.com/photo-1517747614396-d21a78b850e8?q=80&w=1200&auto=format&fit=crop'
-  },
-  {
-    id: 'combo-intervalo-doce',
-    name: 'Combo Intervalo Doce',
-    desc: 'Brownie com Sorvete + bebida gelada para adoçar o intervalo.',
-    price: 35.00,
-    group: 'combos-torcida',
-    subgroup: 'copa2026',
-    badge: 'Doce',
-    image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=1200&auto=format&fit=crop'
-  },
-  {
-    id: 'combo-mesa-da-torcida',
-    name: 'Combo Mesa da Torcida',
-    desc: 'Porção maior para mesa: bebidas, salgados e doce para dividir.',
-    price: 119.00,
-    group: 'combos-torcida',
-    subgroup: 'copa2026',
-    badge: 'Grupo',
-    image: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?q=80&w=1200&auto=format&fit=crop'
-  }
 ]
 
 const GROUPS = [
   { key:"all", label:"Tudo" },
-  { key:"combos-torcida", label:"Combos da Torcida" },
   { key:"bebidas-quentes", label:"Bebidas Quentes" },
   { key:"bebidas-geladas", label:"Bebidas Geladas" },
   { key:"matcha", label:"Matcha" },
@@ -687,12 +636,10 @@ const SUBGROUP_LABELS = {
   'bebidas-especiais': 'Bebidas especiais',
   'cafes-gelados': 'Cafés gelados',
   'sobremesas': 'Sobremesas',
-  'copa2026': 'Copa 2026'
 };
 
 const VALID_COUPONS = {
   BENDITO10: 0.10,
-  TORCIDA10: 0.10
 };
 
 
@@ -744,7 +691,6 @@ const elements = {
   discountValue: document.getElementById('discountValue'),
   totalValue: document.getElementById('totalValue'),
   checkoutFeedback: document.getElementById('checkoutFeedback'),
-  campaignCountdown: document.getElementById('campaignCountdown'),
   reservationFeedback: document.getElementById('reservationFeedback'),
   testimonialText: document.getElementById('testimonialText'),
   testimonialAuthor: document.getElementById('testimonialAuthor'),
@@ -1106,7 +1052,7 @@ function applyCoupon() {
   state.coupon = VALID_COUPONS[code] ? code : ''
   save('bendito-coupon-ui', state.coupon)
   updateCart()
-  notify(elements.checkoutFeedback, state.coupon ? `Cupom aplicado: ${state.coupon}.` : 'Cupom inválido. Tente BENDITO10 ou TORCIDA10.')
+  notify(elements.checkoutFeedback, state.coupon ? `Cupom aplicado: ${state.coupon}.` : 'Cupom inválido. Tente BENDITO10.')
 }
 
 async function checkout() {
@@ -1242,23 +1188,6 @@ function setMinimumReservationDate() {
 }
 
 
-function updateCampaignCountdown() {
-  if (!elements.campaignCountdown) return
-  const finalDate = new Date('2026-07-19T16:00:00-03:00')
-  const now = new Date()
-  const diff = finalDate.getTime() - now.getTime()
-
-  if (diff <= 0) {
-    elements.campaignCountdown.textContent = 'Campanha temática encerrada. Você pode reativar os combos quando quiser.'
-    return
-  }
-
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24))
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24)
-  elements.campaignCountdown.textContent = days > 0
-    ? `Faltam ${days} dia(s) e ${hours}h para a final. Aproveite os combos da torcida.`
-    : `Faltam ${hours}h para a final. Garanta seu combo da torcida.`
-}
 
 function handleNewsletter(event) {
   event.preventDefault()
@@ -1386,6 +1315,4 @@ renderTabs()
 renderMenu()
 updateCart()
 renderTestimonial()
-updateCampaignCountdown()
-setInterval(updateCampaignCountdown, 60000)
 setInterval(() => changeTestimonial(1), 6500)
