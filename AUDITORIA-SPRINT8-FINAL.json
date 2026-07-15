@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "latte_maracuja_present": true,
+    "latte_maracuja_correct_image": true,
+    "latte_maracuja_image_exists": true,
+    "matcha_tropical_correct_image": true,
+    "sandwich_natural_removed": true,
+    "combos_removed_from_catalog": true,
+    "copa_removed_from_html": true,
+    "no_duplicate_catalog_ids": true,
+    "no_missing_local_images": true
+  },
+  "catalog_id_count": 60,
+  "missing_local_images": []
+}

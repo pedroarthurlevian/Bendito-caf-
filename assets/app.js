@@ -342,6 +342,16 @@ const catalog = [
     image: 'assets/img/produtos/matcha-tropical.jpeg'
   },
   {
+    id: 'mat-06',
+    name: 'Latte Matcha com Maracujá',
+    desc: 'Matcha, leite, maracujá e gelo.',
+    price: 18.00,
+    group: 'matcha',
+    subgroup: 'gelado',
+    badge: 'Gelado',
+    image: 'assets/img/produtos/latte-matcha-com-maracuja.jpeg'
+  },
+  {
     id: 'out-01',
     name: 'Água',
     desc: 'Sem gás ou com gás.',
